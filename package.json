@@ -1,0 +1,33 @@
+{
+    "name": "blog-roobios",
+    "version": "0.1.0",
+    "dependencies": {
+        "async": "latest",
+        "bash-color": "latest",
+        "better-npm-run": "latest",
+        "body-parser": "latest",
+        "coffee-loader": "latest",
+        "coffee-script": "latest",
+        "immutable": "latest",
+        "ioredis": "latest",
+        "keymirror": "latest",
+        "lodash": "latest",
+        "primus": "latest",
+        "primus-cluster": "latest",
+        "primus-express-session": "latest",
+        "primus-emit": "latest",
+        "primus-emitter": "latest",
+        "primus-multiplex": "latest",
+        "primus-redis": "latest",
+        "primus-redis-rooms": "latest",
+        "primus-resource": "latest",
+        "primus-responder": "latest",
+        "primus-rooms": "latest",
+        "react": "latest",
+        "react-dom": "latest",
+        "redux": "latest",
+        "redux-immutable": "latest",
+        "redux-thunk": "latest",
+        "shortid": "latest"
+    }
+}
