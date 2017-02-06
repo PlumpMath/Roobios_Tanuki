@@ -1,5 +1,6 @@
 {
-    "name": "blog-roobios",
+    "name": "roobios-tanuki",
+    "author": "Wylie J Kulik",
     "version": "0.1.0",
     "dependencies": {
         "async": "latest",
@@ -8,11 +9,13 @@
         "body-parser": "latest",
         "coffee-loader": "latest",
         "coffee-script": "latest",
+        "cookie-parser": "latest",
         "express": "latest",
         "immutable": "latest",
         "ioredis": "latest",
         "keymirror": "latest",
         "lodash": "latest",
+        "node-uuid": "latest",
         "primus": "latest",
         "primus-cluster": "latest",
         "primus-express-session": "latest",
