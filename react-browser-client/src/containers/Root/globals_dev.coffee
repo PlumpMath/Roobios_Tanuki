@@ -62,7 +62,7 @@ window.reduce = _.reduce
 # developing and demoing my flexbox layout skills. Flexbox is fun and makes me happy to work with CSS
 # , but at the same time I want to continue developing the SVG centric pattern.  So in that segment,
 # look to develop the system of functional machinery  (for the SVG stuff)
-# that allows the full gamut of responsive algos-implementations and features like zoom response to
+# that allows the full gamut of responsive algos-implementations and features, e.g. zoom response to
 # zoom commands, that users expect.
 
 window.get_abs_val_open = (fig_raw) ->
