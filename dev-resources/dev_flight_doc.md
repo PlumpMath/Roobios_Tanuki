@@ -5,4 +5,5 @@
 
 
 - terminal navigate to webpack folder path
-- `webpack --config `
+- `webpack -w --config <webpack filename>`
+- start the dev server 
