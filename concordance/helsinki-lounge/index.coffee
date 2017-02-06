@@ -1,5 +1,9 @@
 
-
+# process.on 'uncaughtException', (err)->
+#     c err
+#     c 'hihihihihi'
+#     c 'teteteaaeueu'
+#     process.exit(0)
 
 EventEmitter = require 'events'
 class Emitter extends EventEmitter
@@ -16,12 +20,14 @@ module.exports = ({ cs, env, redis, helsinki_primus }) ->
         helsinki_primus: helsinki_primus
         redis: redis
 
-    reducer = require('./reducer.coffee').default({ Dispatch, env })
+    c 'state', state
+
+    reducer = require('./reducer.coffee').default
 
     side_effects = require('./side_effects.coffee').default { Dispatch, cs, env }
 
     Dispatch.on 'new_action', ({ action }) ->
-        State = reducer { State, action }
-        side_effects { State }
+        state = reducer { state, action }
+        side_effects { state }
 
-    side_effects { State }
+    side_effects { state }
