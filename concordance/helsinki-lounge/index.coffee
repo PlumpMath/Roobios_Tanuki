@@ -1,8 +1,6 @@
 
 # process.on 'uncaughtException', (err)->
 #     c err
-#     c 'hihihihihi'
-#     c 'teteteaaeueu'
 #     process.exit(0)
 
 EventEmitter = require 'events'
@@ -20,7 +18,6 @@ module.exports = ({ cs, env, redis, helsinki_primus }) ->
         helsinki_primus: helsinki_primus
         redis: redis
 
-    c 'state', state
 
     reducer = require('./reducer.coffee').default
 

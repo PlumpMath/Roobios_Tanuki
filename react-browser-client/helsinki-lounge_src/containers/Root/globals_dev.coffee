@@ -11,7 +11,7 @@ window.key_mirror = require 'keymirror'
 { connect: window.connect } = require 'react-redux'
 window.Imm = require 'immutable'
 
-window.primus = new Primus('http://localhost:3333', {})
+window.primus = new Primus('http://localhost:6494', {})
 
 # bursar = setInterval =>
 #     primus.write

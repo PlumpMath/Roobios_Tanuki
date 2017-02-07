@@ -4,9 +4,9 @@
 arq = {}
 
 arq['primus:init_all_the_primus'] = ({ cs, state, dispatch, desire }) ->
-
     helsinki_primus = state.get('helsinki_primus')
     helsinki_primus.on 'connection', (spark) ->
+        c 'has connection'
         headers = spark.headers
         primus_req = headers['primus::req::backup']
         { cookies, signedCookies, session } = primus_req
@@ -20,7 +20,7 @@ arq['primus:init_all_the_primus'] = ({ cs, state, dispatch, desire }) ->
             { session, cookies, signedCookies } = spark.headers['primus::req::backup']
             token = signedCookies['connect.sid']
             session_metadata = { session, cookies, signedCookies, token }
-
+            c 'has data'
             dispatch
                 type: 'helsinki:spark:data'
                 payload: { spark_id, data, session_metadata, token }

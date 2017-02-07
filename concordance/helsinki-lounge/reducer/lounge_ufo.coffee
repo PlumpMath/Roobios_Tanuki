@@ -6,11 +6,12 @@ arq = {}
 
 
 
-verified_lounger = ""
+verified_lounger = require('./verified_lounger.coffee')
 keys_verified_lounger = keys verified_lounger
 
 
-
+ufo = require('./lounge_ufo_api').default
+keys_ufo = keys ufo
 
 
 arq['lounger:spark:data'] = ({ cs, state, action }) ->

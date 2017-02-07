@@ -20,7 +20,7 @@ module.exports = ({
         log_cache: log_cache
         desires: desires
         ufo_sessions: Imm.Map({})
-        lounge_sessions: Imm.Map({})
+        lounger_sessions: Imm.Map({})
 
         helsinki_primus: helsinki_primus
 

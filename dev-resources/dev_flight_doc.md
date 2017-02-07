@@ -6,4 +6,6 @@
 
 - terminal navigate to webpack folder path
 - `webpack -w --config <webpack filename>`
-- start the dev server 
+
+- `nodemon -w . -w ../concordance/ server_213.coffee` to start the dev-server
+- load browser to localhost:port listed in terminal

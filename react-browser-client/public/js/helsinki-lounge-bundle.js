@@ -15643,7 +15643,7 @@ window.connect = __webpack_require__(86).connect;
 
 window.Imm = __webpack_require__(35);
 
-window.primus = new Primus('http://localhost:3333', {});
+window.primus = new Primus('http://localhost:6494', {});
 
 window.debounce = function(fn, wait, immediate) {
   var timeout;
