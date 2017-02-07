@@ -5,6 +5,13 @@
 arq = {}
 
 
+arq['send_edited_message'] = ({ state, action }) ->
+    c 'action in editing message', action
+    state = state.setIn ['desires', shortid()],
+        type: 'send_edited_message'
+        payload: action.payload
+    state
+
 arq['change_username'] = ({ state, action }) ->
     state.setIn ['desires', shortid()],
         type: 'change_username'

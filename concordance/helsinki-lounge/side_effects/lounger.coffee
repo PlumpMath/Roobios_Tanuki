@@ -31,13 +31,14 @@ arq['send_message'] = ({ state, dispatch, desire }) ->
 
 arq['request_orient'] = ({ state, dispatch, desire }) ->
     { token } = desire.payload
-    { spark, username } = state.getIn(['lounger_sessions', token]).toJS()
+    { spark, username, safe_id } = state.getIn(['lounger_sessions', token]).toJS()
     chat_log = state.get('chat_log').toJS()
     hive = get_hive { state }
     spark.write
         type: 'orient:reply'
         payload:
             username: username
+            safe_id: safe_id
             hive: hive
             chat_log: chat_log
 

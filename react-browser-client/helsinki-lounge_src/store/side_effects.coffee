@@ -3,6 +3,10 @@
 
 arq = {}
 
+arq['send_edited_message'] = ({ desire, store }) ->
+    primus.write
+        type: 'send_edited_message'
+        payload: desire.payload
 
 arq['change_username'] = ({ desire, store }) ->
     primus.write

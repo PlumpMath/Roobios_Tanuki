@@ -15817,6 +15817,17 @@ var arq, concorde_channel, keys_arq, keys_concorde_channel, lounger;
 
 arq = {};
 
+arq['send_edited_message'] = function(arg) {
+  var action, state;
+  state = arg.state, action = arg.action;
+  c('action in editing message', action);
+  state = state.setIn(['desires', shortid()], {
+    type: 'send_edited_message',
+    payload: action.payload
+  });
+  return state;
+};
+
 arq['change_username'] = function(arg) {
   var action, state;
   state = arg.state, action = arg.action;
@@ -15900,11 +15911,11 @@ var arq;
 arq = {};
 
 arq['orient:reply'] = function(arg) {
-  var action, chat_log, data, hive, ref, state, username;
+  var action, chat_log, data, hive, ref, safe_id, state, username;
   state = arg.state, action = arg.action, data = arg.data;
-  ref = data.payload, username = ref.username, hive = ref.hive, chat_log = ref.chat_log;
-  c('chat_log', chat_log);
+  ref = data.payload, username = ref.username, hive = ref.hive, chat_log = ref.chat_log, safe_id = ref.safe_id;
   state = state.set('username', username);
+  state = state.set('safe_id', safe_id);
   state = state.set('hive', Imm.fromJS(hive));
   state = state.set('chat_log', chat_log);
   return state;
@@ -15930,6 +15941,15 @@ exports["default"] = arq;
 var arq, keys_arq, side_effects_f;
 
 arq = {};
+
+arq['send_edited_message'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  return primus.write({
+    type: 'send_edited_message',
+    payload: desire.payload
+  });
+};
 
 arq['change_username'] = function(arg) {
   var desire, store;
@@ -48344,6 +48364,7 @@ comp = rr({
         keycode = e.keycode || e.which;
         if (keycode === 13) {
           if (_this.state.input_focus === true) {
+            c('input focus');
             _this.props.send_message({
               payload: {
                 input_field: _this.state.input_field
@@ -48353,6 +48374,7 @@ comp = rr({
               input_field: ''
             });
           } else if (_this.state.username_input_focus === true) {
+            c('username_input_focus');
             _this.props.change_username({
               payload: {
                 username_input_field: _this.state.username_input_field
@@ -48361,6 +48383,8 @@ comp = rr({
             return _this.setState({
               username_input_field: ''
             });
+          } else {
+            return c('there');
           }
         }
       };
@@ -48445,15 +48469,63 @@ render = function() {
       padding: 4,
       fontSize: 10
     }
-  }, this.props.hive[item.safe_id].username + ': '), span({
+  }, this.props.hive[item.safe_id].username + ': '), this.state.editing === false ? span({
     style: {
+      width: 400,
       height: 16,
       fontSize: 10
     }
-  }, item.input_field));
+  }, item.input_field) : input({
+    style: {
+      fontSize: 10,
+      color: 'grey',
+      height: 14,
+      width: 400
+    },
+    type: 'text',
+    value: this.state.input_value,
+    onChange: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_value: e.currentTarget.value
+        });
+      };
+    })(this)
+  }), this.props.safe_id === item.safe_id ? span({
+    onClick: (function(_this) {
+      return function() {
+        if (_this.state.editing === false) {
+          return _this.setState({
+            editing: true
+          });
+        } else if (_this.state.editing === true) {
+          _this.setState({
+            editing: false
+          });
+          return _this.props.send_edited_message({
+            item: item,
+            input_value: _this.state.input_value
+          });
+        }
+      };
+    })(this),
+    style: {
+      width: 40,
+      marginLeft: 10,
+      color: 'grey',
+      fontSize: 10,
+      cursor: 'pointer'
+    }
+  }, this.state.editing === false ? 'edit' : 'ok') : void 0);
 };
 
 comp = rr({
+  getInitialState: function() {
+    return {
+      editing: false,
+      input_value: this.props.item.input_field
+    };
+  },
   render: render
 });
 
@@ -48462,7 +48534,19 @@ map_state_to_props = function(state) {
 };
 
 map_dispatch_to_props = function(dispatch) {
-  return {};
+  return {
+    send_edited_message: function(arg) {
+      var input_value, item;
+      item = arg.item, input_value = arg.input_value;
+      return dispatch({
+        type: 'send_edited_message',
+        payload: {
+          item: item,
+          input_value: input_value
+        }
+      });
+    }
+  };
 };
 
 exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);

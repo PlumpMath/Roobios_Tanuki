@@ -190,17 +190,21 @@ comp = rr
             keycode = e.keycode or e.which
             if keycode is 13
                 if @state.input_focus is true
+                    c 'input focus'
                     @props.send_message
                         payload:
                             input_field: @state.input_field
                     @setState
                         input_field: ''
                 else if @state.username_input_focus is true
+                    c 'username_input_focus'
                     @props.change_username
                         payload:
                             username_input_field: @state.username_input_field
                     @setState
                         username_input_field: ''
+                else
+                    c 'there'
 
     getInitialState: ->
         input_focus: false

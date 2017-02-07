@@ -5,6 +5,19 @@
 arq = {}
 
 
+arq['send_edited_message'] = ({ state, action }) ->
+    c '\n \n action.payload.data', action.payload.data.payload
+    { token } = action.payload
+    sesh = state.getIn ['lounger_sessions', token]
+    c 'sesh', sesh
+    { input_field, item } = action.payload.data.payload
+    c 'item', item
+
+    if item.safe_id is sesh.safe_id
+        c 'todo'
+
+    state
+
 arq['change_username'] = ({ state, action }) ->
     { spark_id, token, data } = action.payload
     { username_input_field } = data.payload
@@ -23,6 +36,7 @@ arq['send_message'] = ({ state, action }) ->
     { input_field } = action.payload.data.payload
     c 'safe_id', safe_id
     arq_900 =
+        message_id: v4()
         input_field: input_field
         content: input_field
         timestamp: Date.now()
