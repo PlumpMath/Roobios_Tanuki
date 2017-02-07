@@ -10,11 +10,39 @@ arq['send_edited_message'] = ({ state, action }) ->
     { token } = action.payload
     sesh = state.getIn ['lounger_sessions', token]
     c 'sesh', sesh
-    { input_field, item } = action.payload.data.payload
+    c 'action.payload.data.payload', action.payload.data.payload
+    { input_value, item } = action.payload.data.payload
     c 'item', item
+    # c 'input_field', input_field
 
+
+
+
+    # c 'our_element', our_element
     if item.safe_id is sesh.safe_id
-        c 'todo'
+        c 'doing'
+
+    chat_log = state.get 'chat_log'
+    x = chat_log.findEntry (msg, idx) ->
+        c 'looking in chat_log with item, idx', msg, idx
+        if msg.message_id is item.message_id
+            true
+
+    c 'x', x
+    c x[0]
+    c x[1]
+    our_idx = x[0]
+    our_element = x[1]
+    # [ our_idx, our_elememt ] = x
+    our_element.input_field = input_value
+    our_element.content = input_value
+    chat_log = chat_log.update our_idx, (msg_item) ->
+        c 'msg_item', msg_item
+        c 'and el', our_element
+        our_element
+
+    state = state.set 'chat_log', chat_log
+
 
     state
 
