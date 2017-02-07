@@ -66,7 +66,6 @@ sidebar_hive = ->
                 "People in the lounge:"
 
             if (@props.hive)
-                c 'ready'
                 for key, sesh of @props.hive
                     p
                         style:
@@ -96,13 +95,22 @@ central_book_and_input = ->
                 # height: '400px'
             if @props.chat_log.length > 0
                 for item, idx in @props.chat_log
-                    p
-                        key: "messg:#{idx}"
-                        style:
-                            height: 16
-                            margin: 0
-                            fontSize: 12
-                        item.input_field
+                    c 'item', item
+                    c @props.hive
+                    div null,
+                        span
+                            style:
+                                color: 'red'
+                            @props.hive[item.safe_id].username
+
+                        span
+                            key: "messg:#{idx}"
+                            style:
+                                height: 16
+                                margin: 0
+                                padding: 8
+                                fontSize: 12
+                            item.input_field
         div
             style:
                 display: 'flex'

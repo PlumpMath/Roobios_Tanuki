@@ -3,11 +3,9 @@ console.log 'hi'
 
 require './globals_dev.coffee'
 
-
 root_el = document.getElementById 'root'
 Provider = rc require('react-redux').Provider
 store = require('../../store/create.coffee')
-
 
 nexus = rc require('./nexus.coffee').default
 

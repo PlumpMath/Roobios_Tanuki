@@ -15914,17 +15914,8 @@ arq['new_message'] = function(arg) {
   c('is in new message', data);
   chat_log = state.get('chat_log');
   c('chat_log', chat_log.toJS());
-  chat_log = chat_log.push({
-    input_field: data.payload.input_field
-  });
+  chat_log = chat_log.push(data.payload);
   return state.set('chat_log', chat_log);
-};
-
-arq['incoming:stub'] = function(arg) {
-  var action, data, state;
-  state = arg.state, action = arg.action, data = arg.data;
-  state = state.setIn(['placeholder_lounger'], "some random messages");
-  return state;
 };
 
 exports["default"] = arq;
@@ -48200,7 +48191,6 @@ sidebar_hive = function() {
   }, "People in the lounge:"), (function() {
     var ref, results;
     if (this.props.hive) {
-      c('ready');
       ref = this.props.hive;
       results = [];
       for (key in ref) {
@@ -48245,14 +48235,21 @@ central_book_and_input = function() {
       results = [];
       for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
         item = ref[idx];
-        results.push(p({
+        c('item', item);
+        c(this.props.hive);
+        results.push(div(null, span({
+          style: {
+            color: 'red'
+          }
+        }, this.props.hive[item.safe_id].username), span({
           key: "messg:" + idx,
           style: {
             height: 16,
             margin: 0,
+            padding: 8,
             fontSize: 12
           }
-        }, item.input_field));
+        }, item.input_field)));
       }
       return results;
     }

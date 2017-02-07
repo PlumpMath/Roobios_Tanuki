@@ -52,6 +52,8 @@ arq['helsinki:spark:data'] = ({ cs, state, action }) ->
         if user.toJS?
             if user.toJS().role is 'lounger'
                 state = verified_lounger[type] { cs, state, action, data, token }
+    else
+        c 'noop in spark : data in reducer with action.type', action.type
     state
 
 
@@ -70,6 +72,6 @@ arq['helsinki:primus:spark'] = ({ cs, state, action }) ->
         state = state.setIn(['lounger_sessions', token], master_session)
     else
         state = state.setIn(['lounger_sessions', token, 'spark'], spark)
-        state
+    state
 
 module.exports = arq

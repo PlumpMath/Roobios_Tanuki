@@ -14,9 +14,30 @@ arq['change_username'] = ({ state, action }) ->
 
 arq['send_message'] = ({ state, action }) ->
     { spark_id, token } = action.payload
+
+    c action.payload.data.payload
+
+    sesh = state.getIn(['lounger_sessions', token]).toJS()
+    c 'sesh', sesh
+    { session_metadata, safe_id, username } = sesh
+    { input_field } = action.payload.data.payload
+    c 'safe_id', safe_id
+    arq_900 =
+        input_field: input_field
+        content: input_field
+        timestamp: Date.now()
+        safe_id: safe_id
+
+    chat_log = state.get('chat_log')
+    state  = state.set('chat_log', chat_log.push(arq_900))
+
+
+
+
+
     state.setIn ['desires', shortid()],
         type: 'send_message'
-        payload: action.payload
+        payload: arq_900
 
 arq['request_orient'] = ({ state, action }) ->
     { spark_id, token } = action.payload

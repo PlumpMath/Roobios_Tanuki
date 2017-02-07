@@ -9,10 +9,7 @@ arq = assign arq, require('./side_effects/lounger.coffee').default
 
 keys_arq = keys arq
 
-
-
 side_effects_f = ({ cs, Dispatch, env }) ->
-
 
     dispatch = (opts) ->
         Dispatch.emit 'new_action', { action: opts }
