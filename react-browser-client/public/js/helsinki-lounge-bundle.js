@@ -15576,7 +15576,7 @@ function warning(message) {
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Provider, ready__stub, root_component, root_el, set_and_render, store;
+var Provider, nexus, ready__stub, root_component, root_el, set_and_render, store;
 
 console.log('hi');
 
@@ -15587,6 +15587,8 @@ root_el = document.getElementById('root');
 Provider = rc(__webpack_require__(86).Provider);
 
 store = __webpack_require__(100);
+
+nexus = rc(__webpack_require__(245)["default"]);
 
 ready__stub = function() {
   var ref, wh, ww;
@@ -15600,7 +15602,10 @@ root_component = rr({
     ref = this.props, ww = ref.ww, wh = ref.wh;
     return Provider({
       store: store
-    }, ready__stub.bind(this)());
+    }, nexus({
+      ww: .9893 * ww,
+      wh: wh
+    }));
   }
 });
 
@@ -15623,7 +15628,7 @@ window.onload = function() {
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var a, body, circle, clipPath, code, d, defs, div, dom_stuff, ellipse, feBlend, feGaussianBlur, feMerge, feMergeNode, feOffset, filter, foreignObject, form, g, h1, h2, h3, h4, h5, h6, i, image, input, item, k, len, li, line, linearGradient, ol, p, path, pattern, polygon, polyline, pre, radialGradient, rect, ref, ref1, span, stop, strong, svg, tbody, text, textArea, th, thead, tr, tspan, ul, v;
+var a, body, bursar, circle, clipPath, code, d, defs, div, dom_stuff, ellipse, feBlend, feGaussianBlur, feMerge, feMergeNode, feOffset, filter, foreignObject, form, g, h1, h2, h3, h4, h5, h6, i, image, input, item, k, len, li, line, linearGradient, ol, p, path, pattern, polygon, polyline, pre, radialGradient, rect, ref, ref1, span, stop, strong, svg, tbody, text, textArea, th, thead, tr, tspan, ul, v;
 
 window.c = console.log.bind(console);
 
@@ -15644,6 +15649,18 @@ window.connect = __webpack_require__(86).connect;
 window.Imm = __webpack_require__(35);
 
 window.primus = new Primus('http://localhost:6494', {});
+
+bursar = setInterval((function(_this) {
+  return function() {
+    return primus.write({
+      event_type: 'gogogo'
+    });
+  };
+})(this), 4000);
+
+primus.on('data', function(data) {
+  return c('data', data);
+});
 
 window.debounce = function(fn, wait, immediate) {
   var timeout;
@@ -15711,7 +15728,7 @@ window.get_abs_val_open = function(fig_raw) {
 /* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var applyMiddleware, combineReducers, compose, createStore, imm_initial_state, initial_state, middleware, mocks, reducers, ref, store, thunk;
+var applyMiddleware, combineReducers, compose, createStore, imm_initial_state, initial_state, lounger, middleware, mocks, reducers, ref, set, side_effect_trigger_f, side_effects, store, thunk;
 
 ref = __webpack_require__(96), applyMiddleware = ref.applyMiddleware, compose = ref.compose, createStore = ref.createStore;
 
@@ -15726,8 +15743,11 @@ mocks = function(state, action) {
   return state;
 };
 
+lounger = __webpack_require__(246)["default"];
+
 reducers = {
-  mocks: mocks
+  mocks: mocks,
+  lounger: lounger
 };
 
 initial_state = __webpack_require__(101)["default"];
@@ -15735,6 +15755,33 @@ initial_state = __webpack_require__(101)["default"];
 imm_initial_state = Imm.Map(initial_state);
 
 store = createStore(combineReducers(reducers), imm_initial_state, compose(applyMiddleware(middleware)));
+
+side_effects = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./side_effects.coffee\""); e.code = 'MODULE_NOT_FOUND';; throw e; }()))["default"]({
+  store: store
+});
+
+side_effect_trigger_f = function(arg) {
+  var store;
+  store = arg.store;
+  return function() {
+    var state_js;
+    state_js = store.getState().toJS();
+    return side_effects({
+      state_js: state_js
+    });
+  };
+};
+
+set = side_effect_trigger_f({
+  store: store
+});
+
+store.subscribe(set);
+
+store.dispatch({
+  type: 'init:primus',
+  payload: null
+});
 
 module.exports = store;
 
@@ -15748,6 +15795,9 @@ exports["default"] = {
     red: 'orange',
     green: 'purple',
     blue: 'yellow'
+  },
+  lounger: {
+    stuff: 43
   }
 };
 
@@ -47851,6 +47901,127 @@ function symbolObservablePonyfill(root) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(98);
+
+
+/***/ }),
+/* 245 */
+/***/ (function(module, exports) {
+
+var comp, map_dispatch_to_props, map_state_to_props, render;
+
+render = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return div(null, h1(null, "hi thene."), input({
+    type: 'text',
+    placeholder: 'go there',
+    onChange: (function(_this) {
+      return function(e) {
+        return _this.props.ping_test({
+          payload: e.target.value
+        });
+      };
+    })(this)
+  }));
+};
+
+comp = rr({
+  render: render
+});
+
+map_state_to_props = function(state) {
+  return state.toJS();
+};
+
+map_dispatch_to_props = function(dispatch) {
+  return {
+    ping_test: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'send_ping',
+        payload: payload
+      });
+    }
+  };
+};
+
+exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
+
+
+/***/ }),
+/* 246 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arq, concorde_channel, keys_arq, keys_concorde_channel, lounger;
+
+arq = {};
+
+arq['init:primus'] = function(arg) {
+  var action, state;
+  state = arg.state, action = arg.action;
+  return state.setIn(['desires']);
+};
+
+arq['send_ping'] = function(arg) {
+  var action, state;
+  state = arg.state, action = arg.action;
+};
+
+concorde_channel = __webpack_require__(247)["default"];
+
+keys_concorde_channel = keys(concorde_channel);
+
+arq['primus:data'] = function(arg) {
+  var action, data, payload, ref, state, type;
+  state = arg.state, action = arg.action;
+  data = action.payload.data;
+  ref = action.payload.data, type = ref.type, payload = ref.payload;
+  if (includes(keys_concorde_channel, type)) {
+    return concorde_channel[type]({
+      state: state,
+      action: action,
+      data: data
+    });
+  } else {
+    return state;
+  }
+};
+
+keys_arq = keys(arq);
+
+lounger = function(state, action) {
+  c('lounger has action', action);
+  state = state.setIn(['desires'], Imm.Map({}));
+  if (includes(keys_arq, action.type)) {
+    return arq[action.type]({
+      state: state,
+      action: action
+    });
+  } else {
+    return state;
+  }
+};
+
+exports["default"] = lounger;
+
+
+/***/ }),
+/* 247 */
+/***/ (function(module, exports) {
+
+var arq;
+
+arq = {};
+
+arq['incoming:stub'] = function(arg) {
+  var action, data, state;
+  state = arg.state, action = arg.action, data = arg.data;
+  state = state.setIn(['placeholder_lounger'], "some random messages");
+  return state;
+};
+
+exports["default"] = arq;
 
 
 /***/ })

@@ -25,7 +25,7 @@ arq['primus:init_all_the_primus'] = ({ cs, state, dispatch, desire }) ->
                 type: 'helsinki:spark:data'
                 payload: { spark_id, data, session_metadata, token }
 
-            spark.on 'end', ->
-                c color.white('todo: implement spark ending stuff')
+        spark.on 'end', ->
+            c color.white('todo: implement spark ending stuff')
 
 module.exports = arq

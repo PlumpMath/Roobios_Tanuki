@@ -8,18 +8,26 @@ root_el = document.getElementById 'root'
 Provider = rc require('react-redux').Provider
 store = require('../../store/create.coffee')
 
+
+nexus = rc require('./nexus.coffee').default
+
+
 ready__stub = ->
     { ww, wh } = @props
     div null,
         p null, 'hello38838302929'
         p null, 'stnhstnhstnhstnh'
 
+
 root_component = rr
     render: ->
         { ww, wh } = @props
         Provider
             store: store
-            ready__stub.bind(@)()
+            # ready__stub.bind(@)()
+            nexus
+                ww: .9893 * ww
+                wh: wh
 
 set_and_render = ->
     { width, height } = root_el.getBoundingClientRect()

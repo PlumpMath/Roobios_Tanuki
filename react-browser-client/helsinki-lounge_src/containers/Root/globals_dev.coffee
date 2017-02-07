@@ -13,13 +13,13 @@ window.Imm = require 'immutable'
 
 window.primus = new Primus('http://localhost:6494', {})
 
-# bursar = setInterval =>
-#     primus.write
-#         event_type: 'gogogog'
-# , 4000
-#
-# primus.on 'data', (data) ->
-#     c 'data', data
+bursar = setInterval =>
+    primus.write
+        event_type: 'gogogo'
+, 4000
+
+primus.on 'data', (data) ->
+    c 'data', data
 
 window.debounce = (fn, wait, immediate) ->
     timeout = false

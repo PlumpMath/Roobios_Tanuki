@@ -14,7 +14,8 @@ ufo = require('./lounge_ufo_api').default
 keys_ufo = keys ufo
 
 
-arq['lounger:spark:data'] = ({ cs, state, action }) ->
+arq['helsinki:spark:data'] = ({ cs, state, action }) ->
+    c 'spark data'
     { session_metadata, spark_id, data, token } = action.payload
     { type, payload } = data
 
@@ -28,7 +29,8 @@ arq['lounger:spark:data'] = ({ cs, state, action }) ->
     state
 
 
-arq['lounger:primus:spark'] = ({ cs, state, action }) ->
+arq['helsinki:primus:spark'] = ({ cs, state, action }) ->
+    c 'primus spark'
     { spark, session_metadata } = action.payload
     { signedCookies, cookies, session, token } = session_metadata
     token = signedCookies['connect.sid']
