@@ -49,20 +49,3 @@ window.keys = _sq.keys
 window.includes = _sq.includes
 window.map = _.map
 window.reduce = _.reduce
-
-# Major TODO & note:  This system is really good and should be improved features like zoom.
-# I still believe this is a more general and better way to build GUIs than classic CSS, especially on large
-# projects with big development scale that would benefit from efficiencies in re-use.
-# This function is used solely in the programmatic SVG pattern SVG-all-the-Things.
-# I'll have other paths in this system that deliver classic CSS based apps and in those I'll be
-# developing and demoing my flexbox layout skills. Flexbox is fun and makes me happy to work with CSS
-# , but at the same time I want to continue developing the SVG centric pattern.  So in that segment,
-# look to develop the system of functional machinery  (for the SVG stuff)
-# that allows the full gamut of responsive algos-implementations and features, e.g. zoom response to
-# zoom commands, that users expect.
-
-window.get_abs_val_open = (fig_raw) ->
-    { ww , wh } = @props
-    ratio_zzz = fig_raw / 1366
-    fig_abs = ratio_zzz * ww
-    return fig_abs

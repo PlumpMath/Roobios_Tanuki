@@ -10,6 +10,7 @@ reducer = ({ cs, state, action }) ->
     if includes(keys_arq, action.type)
         arq[action.type] { cs, state, action }
     else
+        c 'noop in reducer with', action.type
         state
 
 exports.default = reducer

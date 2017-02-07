@@ -1,6 +1,32 @@
 
 
 
+elements = [
+    "wood"
+    "fire"
+    "earth"
+    "metal"
+    "water"
+]
+
+colors = [
+    "cobalt-blue"
+    "stained-silver"
+    "verdigris-copper"
+    "gold-flakes"
+    "titanium-white"
+]
+
+animals = [
+    'rooster'
+    'tanuki'
+    'ratsnake'
+    'mongoose'
+    'falcon'
+]
+
+
+
 
 arq = {}
 
@@ -39,6 +65,7 @@ arq['helsinki:primus:spark'] = ({ cs, state, action }) ->
             spark: spark
             session_metadata: session_metadata
             token: token
+            username: "#{elements[Math.floor(Math.random() * 5)]} #{colors[Math.floor(Math.random() * 5)]} #{animals[Math.floor(Math.random() * 5)]}"
         state = state.setIn(['lounger_sessions', token], master_session)
     else
         state = state.setIn(['lounger_sessions', token, 'spark'], spark)

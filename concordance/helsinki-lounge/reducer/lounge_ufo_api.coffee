@@ -4,6 +4,16 @@
 
 arq = {}
 
+
+arq['change_username'] = ({ state, action }) ->
+    c 'received change'
+    { spark_id, token, data } = action.payload
+    c 'data', data
+    { username_input_field } = data.payload
+    state = state.setIn ['lounger_sessions', token, 'username'], username_input_field
+    state
+
+
 arq['send_message'] = ({ state, action }) ->
     { spark_id, token } = action.payload
     state.setIn ['desires', shortid()],

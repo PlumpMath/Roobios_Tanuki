@@ -5,6 +5,11 @@
 arq = {}
 
 
+arq['change_username'] = ({ state, action }) ->
+    state.setIn ['desires', shortid()],
+        type: 'change_username'
+        payload: action.payload
+
 arq['send_message'] = ({ state, action }) ->
     state.setIn ['desires', shortid()],
         type: 'send_message'
@@ -44,10 +49,9 @@ lounger = (state, action) ->
     # c 'lounger has action', action
     state = state.setIn ['desires'], Imm.Map({})
     if includes(keys_arq, action.type)
-        c 'includes'
         arq[action.type]({ state, action })
     else
-        c 'noop'
+        c 'noop with ', action.type
         state
 
 

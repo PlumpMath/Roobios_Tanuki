@@ -15697,14 +15697,6 @@ window.map = _.map;
 
 window.reduce = _.reduce;
 
-window.get_abs_val_open = function(fig_raw) {
-  var fig_abs, ratio_zzz, ref2, wh, ww;
-  ref2 = this.props, ww = ref2.ww, wh = ref2.wh;
-  ratio_zzz = fig_raw / 1366;
-  fig_abs = ratio_zzz * ww;
-  return fig_abs;
-};
-
 
 /***/ }),
 /* 100 */
@@ -15811,6 +15803,7 @@ exports["default"] = {
   },
   lounger: {
     chat_log: Imm.List([]),
+    username: 'placholder username',
     stuff: 43
   }
 };
@@ -15823,6 +15816,15 @@ exports["default"] = {
 var arq, concorde_channel, keys_arq, keys_concorde_channel, lounger;
 
 arq = {};
+
+arq['change_username'] = function(arg) {
+  var action, state;
+  state = arg.state, action = arg.action;
+  return state.setIn(['desires', shortid()], {
+    type: 'change_username',
+    payload: action.payload
+  });
+};
 
 arq['send_message'] = function(arg) {
   var action, state;
@@ -15876,13 +15878,12 @@ keys_arq = keys(arq);
 lounger = function(state, action) {
   state = state.setIn(['desires'], Imm.Map({}));
   if (includes(keys_arq, action.type)) {
-    c('includes');
     return arq[action.type]({
       state: state,
       action: action
     });
   } else {
-    c('noop');
+    c('noop with ', action.type);
     return state;
   }
 };
@@ -15897,6 +15898,15 @@ exports["default"] = lounger;
 var arq;
 
 arq = {};
+
+arq['orient:reply'] = function(arg) {
+  var action, data, state, username;
+  state = arg.state, action = arg.action, data = arg.data;
+  c('into orient reply', data);
+  username = data.payload.username;
+  c('username', username);
+  return state.set('username', username);
+};
 
 arq['new_message'] = function(arg) {
   var action, chat_log, data, state;
@@ -15927,6 +15937,15 @@ exports["default"] = arq;
 var arq, keys_arq, side_effects_f;
 
 arq = {};
+
+arq['change_username'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  return primus.write({
+    type: 'change_username',
+    payload: desire.payload
+  });
+};
 
 arq['send_message'] = function(arg) {
   var desire, store;
@@ -48132,7 +48151,7 @@ sidebar_hive = function() {
       fontSize: 10,
       color: 'maroon'
     }
-  }, "Your name: " + this.state.username), input({
+  }, "Your name: " + this.props.username), input({
     style: {
       fontSize: 12,
       color: 'darkgrey',
@@ -48297,6 +48316,8 @@ the_whole = function() {
 
 render = function() {
   var ref, wh, ww;
+  c(this.state);
+  c(this.props);
   ref = this.props, ww = ref.ww, wh = ref.wh;
   return the_whole.bind(this)();
 };
@@ -48337,7 +48358,7 @@ comp = rr({
       username_input_focus: false,
       input_field: '',
       username_input_field: '',
-      username: 'placeholder username'
+      username: this.props.username
     };
   },
   render: render

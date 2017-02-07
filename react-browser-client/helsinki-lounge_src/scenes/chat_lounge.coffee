@@ -31,7 +31,7 @@ sidebar_hive = ->
                 style:
                     fontSize: 10
                     color: 'maroon'
-                "Your name: #{@state.username}"
+                "Your name: #{@props.username}"
 
             input
                 style:
@@ -156,7 +156,8 @@ the_whole = ->
             central_book_and_input.bind(@)()
 
 render = ->
-    # c @state
+    c @state
+    c @props
     # c 'in render with @props', @props
     { ww, wh } = @props
     the_whole.bind(@)()
@@ -184,11 +185,12 @@ comp = rr
         username_input_focus: false
         input_field: ''
         username_input_field: ''
-        username: 'placeholder username'
+        username: @props.username
 
     render: render
 
 map_state_to_props = (state) ->
+    # c state.get('lounger').toJS()
     state.get('lounger').toJS()
 
 map_dispatch_to_props = (dispatch) ->
