@@ -7,6 +7,7 @@
 
 render = ->
     { item, idx } = @props
+    nowish = new Date(item.timestamp)
     div
         key: "messg:#{idx}"
         style:
@@ -14,6 +15,13 @@ render = ->
             display: 'flex'
             alignItems: 'flex-start'
             justifyContent: 'flex-start'
+        span
+            style:
+                width: 80
+                padding: 4
+                color: 'chartreuse'
+                fontSize: 10
+            "#{nowish.getHours()}:#{nowish.getMinutes()}"
         span
             style:
                 width: 160

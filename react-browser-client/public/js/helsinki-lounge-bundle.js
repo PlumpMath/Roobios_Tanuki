@@ -48421,8 +48421,9 @@ exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
 var comp, map_dispatch_to_props, map_state_to_props, render;
 
 render = function() {
-  var idx, item, ref;
+  var idx, item, nowish, ref;
   ref = this.props, item = ref.item, idx = ref.idx;
+  nowish = new Date(item.timestamp);
   return div({
     key: "messg:" + idx,
     style: {
@@ -48431,6 +48432,13 @@ render = function() {
       justifyContent: 'flex-start'
     }
   }, span({
+    style: {
+      width: 80,
+      padding: 4,
+      color: 'chartreuse',
+      fontSize: 10
+    }
+  }, (nowish.getHours()) + ":" + (nowish.getMinutes())), span({
     style: {
       width: 160,
       color: 'plum',
