@@ -2,33 +2,20 @@
 
 
 
-
-
-
-
-
-
-render = ->
-    # c 'in render with @props', @props
-    { ww, wh } = @props
+sidebar_hive = ->
     div
         style:
-            height: '100%'
-            width: '100%'
+            backgroundColor: 'lightcyan'
+            display: 'flex'
+            flexGrow: 1
+
+central_book_and_input = ->
+    div
+        style:
+            backgroundColor: 'aliceblue'
             display: 'flex'
             flexDirection: 'column'
-            alignItems: 'center'
-            justifyContent: 'flex-start'
-            backgroundColor: 'burlywood'
-
-        div
-            style:
-                flexGrow: 1
-            h1
-                style:
-                    color: 'azure'
-                "The Chat"
-
+            flexGrow: 4
         div
             style:
                 backgroundColor: 'ivory'
@@ -39,9 +26,6 @@ render = ->
                 alignItems: 'center'
                 justifyContent: 'flex-start'
                 # height: '400px'
-
-
-
         div
             style:
                 display: 'flex'
@@ -52,7 +36,9 @@ render = ->
             input
                 style:
                     width: '400px'
-                    height: '40px'
+                    height: 20
+                    fontSize: 16
+                    color: 'grey'
                     padding: '8px'
                 type: 'text'
                 placeholder: 'chat here'
@@ -60,6 +46,45 @@ render = ->
                     @props.ping_test
                         payload: e.target.value
 
+
+the_whole = ->
+    { ww, wh } = @props
+    div
+        style:
+            height: '100%'
+            width: '100%'
+            display: 'flex'
+            flexDirection: 'column'
+            alignItems: 'center'
+            justifyContent: 'flex-start'
+            backgroundColor: 'snow'
+
+        div
+            style:
+                flexGrow: 1
+                maxHeight: 50
+                flexShrink: 4
+            h2
+                style:
+                    height: 60
+                    color: 'grey'
+                    fontFamily: 'sans'
+                "The Chat"
+
+        div
+            style:
+                display: 'flex'
+                flexGrow: 23
+                width: '100%'
+                backgroundColor: 'aliceblue'
+
+            sidebar_hive.bind(@)()
+            central_book_and_input.bind(@)()
+
+render = ->
+    # c 'in render with @props', @props
+    { ww, wh } = @props
+    the_whole.bind(@)()
 
 comp = rr
     render: render

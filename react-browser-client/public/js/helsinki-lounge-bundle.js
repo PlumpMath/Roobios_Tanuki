@@ -47894,30 +47894,27 @@ module.exports = __webpack_require__(98);
 /* 245 */
 /***/ (function(module, exports) {
 
-var comp, map_dispatch_to_props, map_state_to_props, render;
+var central_book_and_input, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
 
-render = function() {
-  var ref, wh, ww;
-  ref = this.props, ww = ref.ww, wh = ref.wh;
+sidebar_hive = function() {
   return div({
     style: {
-      height: '100%',
-      width: '100%',
+      backgroundColor: 'lightcyan',
       display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      backgroundColor: 'burlywood'
-    }
-  }, div({
-    style: {
       flexGrow: 1
     }
-  }, h1({
+  });
+};
+
+central_book_and_input = function() {
+  return div({
     style: {
-      color: 'azure'
+      backgroundColor: 'aliceblue',
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 4
     }
-  }, "The Chat")), div({
+  }, div({
     style: {
       backgroundColor: 'ivory',
       display: 'flex',
@@ -47938,7 +47935,9 @@ render = function() {
   }, input({
     style: {
       width: '400px',
-      height: '40px',
+      height: 20,
+      fontSize: 16,
+      color: 'grey',
       padding: '8px'
     },
     type: 'text',
@@ -47951,6 +47950,47 @@ render = function() {
       };
     })(this)
   })));
+};
+
+the_whole = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return div({
+    style: {
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      backgroundColor: 'snow'
+    }
+  }, div({
+    style: {
+      flexGrow: 1,
+      maxHeight: 50,
+      flexShrink: 4
+    }
+  }, h2({
+    style: {
+      height: 60,
+      color: 'grey',
+      fontFamily: 'sans'
+    }
+  }, "The Chat")), div({
+    style: {
+      display: 'flex',
+      flexGrow: 23,
+      width: '100%',
+      backgroundColor: 'aliceblue'
+    }
+  }, sidebar_hive.bind(this)(), central_book_and_input.bind(this)()));
+};
+
+render = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return the_whole.bind(this)();
 };
 
 comp = rr({
