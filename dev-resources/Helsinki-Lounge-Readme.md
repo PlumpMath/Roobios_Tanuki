@@ -9,6 +9,7 @@
 - node and Npm
 - `npm i -g webpack`, `npm i -g nodemon`
 - A Redis server installed and running locally (let me know if this a problem I could remove this whole structure if needed.)
+- Clone the repo and `npm i`
 
 
 ##### Pack and watch web-app
