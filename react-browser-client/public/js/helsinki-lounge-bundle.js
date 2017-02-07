@@ -15716,7 +15716,7 @@ window.get_abs_val_open = function(fig_raw) {
 /* 100 */
 /***/ (function(module, exports) {
 
-var central_book_and_input, change_input_field, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
+var central_book_and_input, change_input_field, change_username_input_field, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
 
 change_input_field = function(arg) {
   var val;
@@ -15726,14 +15726,83 @@ change_input_field = function(arg) {
   });
 };
 
+change_username_input_field = function(arg) {
+  var val;
+  val = arg.val;
+  return this.setState({
+    username_input_field: val
+  });
+};
+
 sidebar_hive = function() {
   return div({
     style: {
       backgroundColor: 'lightcyan',
       display: 'flex',
-      flexGrow: 1
+      flexGrow: 1,
+      flexDirection: 'column'
     }
-  });
+  }, div({
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'lavender',
+      width: '100%',
+      height: '20%'
+    }
+  }, p({
+    style: {
+      fontSize: 10,
+      color: 'maroon'
+    }
+  }, "Your name: " + this.state.username), input({
+    style: {
+      fontSize: 12,
+      color: 'darkgrey',
+      padding: 8
+    },
+    type: 'text',
+    placeholder: "set username",
+    value: this.state.username_input_field,
+    onFocus: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          username_input_focus: true
+        });
+      };
+    })(this),
+    onBlur: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          username_input_focus: false
+        });
+      };
+    })(this),
+    onChange: (function(_this) {
+      return function(e) {
+        return change_username_input_field.bind(_this)({
+          val: e.target.value
+        });
+      };
+    })(this)
+  })), div({
+    style: {
+      backgroundColor: 'lemonchiffon',
+      width: '100%',
+      height: '80%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start'
+    }
+  }, p({
+    style: {
+      fontSize: 10,
+      color: 'maroon'
+    }
+  }, "People in the lounge:")));
 };
 
 central_book_and_input = function() {
@@ -15873,6 +15942,15 @@ comp = rr({
             return _this.setState({
               input_field: ''
             });
+          } else if (_this.state.username_input_focus === true) {
+            _this.props.change_username({
+              payload: {
+                username_input_field: _this.state.username_input_field
+              }
+            });
+            return _this.setState({
+              username_input_field: ''
+            });
           }
         }
       };
@@ -15881,7 +15959,10 @@ comp = rr({
   getInitialState: function() {
     return {
       input_focus: false,
-      input_field: ''
+      username_input_focus: false,
+      input_field: '',
+      username_input_field: '',
+      username: 'placeholder username'
     };
   },
   render: render
@@ -15893,6 +15974,14 @@ map_state_to_props = function(state) {
 
 map_dispatch_to_props = function(dispatch) {
   return {
+    change_username: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'change_username',
+        payload: payload
+      });
+    },
     send_message: function(arg) {
       var payload;
       payload = arg.payload;

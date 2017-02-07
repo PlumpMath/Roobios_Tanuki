@@ -5,12 +5,64 @@ change_input_field = ({ val }) ->
     @setState
         input_field: val
 
+change_username_input_field = ({ val }) ->
+    @setState
+        username_input_field: val
+
 sidebar_hive = ->
     div
         style:
             backgroundColor: 'lightcyan'
             display: 'flex'
             flexGrow: 1
+            flexDirection: 'column'
+        div
+            style:
+                display: 'flex'
+                flexDirection: 'column'
+                alignItems: 'center'
+                justifyContent: 'center'
+                backgroundColor: 'lavender'
+                width: '100%'
+                height: '20%'
+
+            p
+                style:
+                    fontSize: 10
+                    color: 'maroon'
+                "Your name: #{@state.username}"
+
+            input
+                style:
+                    fontSize: 12
+                    color: 'darkgrey'
+                    padding: 8
+                type: 'text'
+                placeholder: "set username"
+                value: @state.username_input_field
+                onFocus: (e) =>
+                    @setState
+                        username_input_focus: true
+                onBlur: (e) =>
+                    @setState
+                        username_input_focus: false
+                onChange: (e) =>
+                    change_username_input_field.bind(@) val: e.target.value
+
+        div
+            style:
+                backgroundColor: 'lemonchiffon'
+                width: '100%'
+                height: '80%'
+                display: 'flex'
+                flexDirection: 'column'
+                alignItems: 'center'
+                justifyContent: 'flex-start'
+            p
+                style:
+                    fontSize: 10
+                    color: 'maroon'
+                "People in the lounge:"
 
 central_book_and_input = ->
     # c '@props', @props
@@ -119,10 +171,19 @@ comp = rr
                             input_field: @state.input_field
                     @setState
                         input_field: ''
+                else if @state.username_input_focus is true
+                    @props.change_username
+                        payload:
+                            username_input_field: @state.username_input_field
+                    @setState
+                        username_input_field: ''
 
     getInitialState: ->
         input_focus: false
+        username_input_focus: false
         input_field: ''
+        username_input_field: ''
+        username: 'placeholder username'
 
     render: render
 
@@ -130,6 +191,11 @@ map_state_to_props = (state) ->
     state.get('lounger').toJS()
 
 map_dispatch_to_props = (dispatch) ->
+    change_username: ({ payload }) ->
+        dispatch
+            type: 'change_username'
+            payload: payload
+
     send_message: ({ payload }) ->
         dispatch
             type: 'send_message'
