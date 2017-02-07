@@ -15784,6 +15784,7 @@ exports["default"] = {
     blue: 'yellow'
   },
   lounger: {
+    chat_log: Imm.List([]),
     stuff: 43
   }
 };
@@ -47894,7 +47895,15 @@ module.exports = __webpack_require__(98);
 /* 245 */
 /***/ (function(module, exports) {
 
-var central_book_and_input, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
+var central_book_and_input, change_input_field, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
+
+change_input_field = function(arg) {
+  var val;
+  val = arg.val;
+  return this.setState({
+    input_field: val
+  });
+};
 
 sidebar_hive = function() {
   return div({
@@ -47942,10 +47951,24 @@ central_book_and_input = function() {
     },
     type: 'text',
     placeholder: 'chat here',
+    onFocus: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_focus: true
+        });
+      };
+    })(this),
+    onBlur: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_focus: false
+        });
+      };
+    })(this),
     onChange: (function(_this) {
       return function(e) {
-        return _this.props.ping_test({
-          payload: e.target.value
+        return change_input_field.bind(_this)({
+          val: e.target.value
         });
       };
     })(this)
@@ -47994,6 +48017,29 @@ render = function() {
 };
 
 comp = rr({
+  componentDidMount: function() {
+    return document.onkeydown = (function(_this) {
+      return function(e) {
+        var keycode;
+        keycode = e.keycode || e.which;
+        if (keycode === 13) {
+          if (_this.state.input_focus === true) {
+            return _this.props.send_message({
+              payload: {
+                input_field: _this.state.input_field
+              }
+            });
+          }
+        }
+      };
+    })(this);
+  },
+  getInitialState: function() {
+    return {
+      input_focus: false,
+      input_field: ''
+    };
+  },
   render: render
 });
 
@@ -48003,7 +48049,15 @@ map_state_to_props = function(state) {
 
 map_dispatch_to_props = function(dispatch) {
   return {
-    ping_test: function(arg) {
+    send_message: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'send_message',
+        payload: payload
+      });
+    },
+    request_orient: function(arg) {
       var payload;
       payload = arg.payload;
       return dispatch({
@@ -48024,6 +48078,15 @@ exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
 var arq, concorde_channel, keys_arq, keys_concorde_channel, lounger;
 
 arq = {};
+
+arq['send_message'] = function(arg) {
+  var action, state;
+  state = arg.state, action = arg.action;
+  return state.setIn(['desires', shortid()], {
+    type: 'send_message',
+    payload: action.payload
+  });
+};
 
 arq['init:primus'] = function(arg) {
   var action, state;
@@ -48090,6 +48153,18 @@ var arq;
 
 arq = {};
 
+arq['new_message'] = function(arg) {
+  var action, chat_log, data, state;
+  state = arg.state, action = arg.action, data = arg.data;
+  c('is in new message', data);
+  chat_log = state.get('chat_log');
+  c('chat_log', chat_log.toJS());
+  chat_log = chat_log.push({
+    input_field: data.payload.input_field
+  });
+  return state.set('chat_log', chat_log);
+};
+
 arq['incoming:stub'] = function(arg) {
   var action, data, state;
   state = arg.state, action = arg.action, data = arg.data;
@@ -48107,6 +48182,15 @@ exports["default"] = arq;
 var arq, keys_arq, side_effects_f;
 
 arq = {};
+
+arq['send_message'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  return primus.write({
+    type: 'send_message',
+    payload: desire.payload
+  });
+};
 
 arq['init:primus'] = function(arg) {
   var desire, store;

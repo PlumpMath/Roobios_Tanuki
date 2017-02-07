@@ -7,4 +7,6 @@ exports.default =
         blue: 'yellow'
 
     lounger:
+        chat_log: Imm.List([])
+        
         stuff: 43

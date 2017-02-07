@@ -5,6 +5,13 @@
 arq = {}
 
 
+arq['send_message'] = ({ state, action }) ->
+    state.setIn ['desires', shortid()],
+        type: 'send_message'
+        payload: action.payload
+
+
+
 arq['init:primus'] = ({ state, action }) ->
     state.setIn ['desires', shortid()],
         type: 'init:primus'
@@ -16,7 +23,6 @@ arq['request_orient'] = ({ state, action }) ->
     state.setIn ['desires', shortid()],
         type: 'request_orient'
         payload: null
-
 
 
 concorde_channel = require('./lounger/concorde_channel.coffee').default

@@ -5,6 +5,10 @@ arq = {}
 
 
 
+arq['send_message'] = ({ desire, store }) ->
+    primus.write
+        type: 'send_message'
+        payload: desire.payload
 
 arq['init:primus'] = ({ desire, store }) ->
     primus.on 'data', (data) ->

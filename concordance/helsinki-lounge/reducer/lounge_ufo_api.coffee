@@ -4,6 +4,12 @@
 
 arq = {}
 
+arq['send_message'] = ({ state, action }) ->
+    { spark_id, token } = action.payload
+    state.setIn ['desires', shortid()],
+        type: 'send_message'
+        payload: action.payload
+
 arq['request_orient'] = ({ state, action }) ->
     { spark_id, token } = action.payload
     state.setIn ['desires', shortid()],

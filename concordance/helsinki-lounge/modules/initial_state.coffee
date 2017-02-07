@@ -24,6 +24,8 @@ module.exports = ({
 
         helsinki_primus: helsinki_primus
 
+        chat_log: Imm.List([])
+
     state = assign state, primary_state
 
     state = Imm.fromJS state

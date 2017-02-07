@@ -1,6 +1,12 @@
 
 
 
+change_input_field = ({ val }) ->
+    @setState
+        input_field: val
+
+
+
 
 sidebar_hive = ->
     div
@@ -42,9 +48,16 @@ central_book_and_input = ->
                     padding: '8px'
                 type: 'text'
                 placeholder: 'chat here'
+                onFocus: (e) =>
+                    @setState
+                        input_focus: true
+                onBlur: (e) =>
+                    @setState
+                        input_focus: false
                 onChange: (e) =>
-                    @props.ping_test
-                        payload: e.target.value
+                    change_input_field.bind(@) val: e.target.value
+                    # @props.ping_test
+                    #     payload: e.target.value
 
 
 the_whole = ->
@@ -82,19 +95,37 @@ the_whole = ->
             central_book_and_input.bind(@)()
 
 render = ->
+    # c @state
     # c 'in render with @props', @props
     { ww, wh } = @props
     the_whole.bind(@)()
 
 comp = rr
+    componentDidMount: ->
+        document.onkeydown = (e) =>
+            keycode = e.keycode or e.which
+            if keycode is 13
+                if @state.input_focus is true
+                    @props.send_message
+                        payload:
+                            input_field: @state.input_field
+
+    getInitialState: ->
+        input_focus: false
+        input_field: ''
+
     render: render
 
 map_state_to_props = (state) ->
     state.toJS()
 
-
 map_dispatch_to_props = (dispatch) ->
-    ping_test: ({ payload }) ->
+    send_message: ({ payload }) ->
+        dispatch
+            type: 'send_message'
+            payload: payload
+
+    request_orient: ({ payload }) ->
         dispatch
             type: 'request_orient'
             payload: payload
