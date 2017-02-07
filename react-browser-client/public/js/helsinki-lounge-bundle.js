@@ -15739,7 +15739,6 @@ thunk = __webpack_require__(229)["default"];
 middleware = thunk;
 
 mocks = function(state, action) {
-  c('action', action);
   return state;
 };
 
@@ -15752,11 +15751,11 @@ reducers = {
 
 initial_state = __webpack_require__(101)["default"];
 
-imm_initial_state = Imm.Map(initial_state);
+imm_initial_state = Imm.fromJS(initial_state);
 
 store = createStore(combineReducers(reducers), imm_initial_state, compose(applyMiddleware(middleware)));
 
-side_effects = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./side_effects.coffee\""); e.code = 'MODULE_NOT_FOUND';; throw e; }()))["default"]({
+side_effects = __webpack_require__(248)["default"]({
   store: store
 });
 
@@ -47911,6 +47910,7 @@ var comp, map_dispatch_to_props, map_state_to_props, render;
 
 render = function() {
   var ref, wh, ww;
+  c('in render with @props', this.props);
   ref = this.props, ww = ref.ww, wh = ref.wh;
   return div(null, h1(null, "hi thene."), input({
     type: 'text',
@@ -47939,7 +47939,7 @@ map_dispatch_to_props = function(dispatch) {
       var payload;
       payload = arg.payload;
       return dispatch({
-        type: 'send_ping',
+        type: 'request_orient',
         payload: payload
       });
     }
@@ -47960,12 +47960,25 @@ arq = {};
 arq['init:primus'] = function(arg) {
   var action, state;
   state = arg.state, action = arg.action;
-  return state.setIn(['desires']);
+  return state.setIn(['desires', shortid()], {
+    type: 'init:primus',
+    payload: null
+  });
 };
 
 arq['send_ping'] = function(arg) {
   var action, state;
   state = arg.state, action = arg.action;
+  return state;
+};
+
+arq['request_orient'] = function(arg) {
+  var action, state;
+  state = arg.state, action = arg.action;
+  return state.setIn(['desires', shortid()], {
+    type: 'request_orient',
+    payload: null
+  });
 };
 
 concorde_channel = __webpack_require__(247)["default"];
@@ -47991,14 +48004,17 @@ arq['primus:data'] = function(arg) {
 keys_arq = keys(arq);
 
 lounger = function(state, action) {
+  c('lounger has state', state);
   c('lounger has action', action);
   state = state.setIn(['desires'], Imm.Map({}));
   if (includes(keys_arq, action.type)) {
+    c('includes');
     return arq[action.type]({
       state: state,
       action: action
     });
   } else {
+    c('noop');
     return state;
   }
 };
@@ -48022,6 +48038,66 @@ arq['incoming:stub'] = function(arg) {
 };
 
 exports["default"] = arq;
+
+
+/***/ }),
+/* 248 */
+/***/ (function(module, exports) {
+
+var arq, keys_arq, side_effects_f;
+
+arq = {};
+
+arq['init:primus'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  primus.on('data', function(data) {
+    store.dispatch({
+      type: 'primus:data',
+      payload: {
+        data: data
+      }
+    });
+    return primus.write({
+      type: 'request_orient'
+    });
+  });
+  return setInterval((function(_this) {
+    return function() {
+      return primus.write({
+        type: 'request_orient'
+      });
+    };
+  })(this), 3000);
+};
+
+keys_arq = keys(arq);
+
+side_effects_f = function(arg) {
+  var store;
+  store = arg.store;
+  return function(arg1) {
+    var desire, key_id, ref, results, state, state_js;
+    state_js = arg1.state_js;
+    state = state_js;
+    ref = state.lounger.desires;
+    results = [];
+    for (key_id in ref) {
+      desire = ref[key_id];
+      if (includes(keys_arq, desire.type)) {
+        results.push(arq[desire.type]({
+          desire: desire,
+          store: store
+        }));
+      } else {
+        results.push(void 0);
+      }
+    }
+    return results;
+  };
+};
+
+exports["default"] = side_effects_f;
 
 
 /***/ })

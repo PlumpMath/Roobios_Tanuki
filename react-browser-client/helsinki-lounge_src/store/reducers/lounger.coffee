@@ -6,12 +6,18 @@ arq = {}
 
 
 arq['init:primus'] = ({ state, action }) ->
-    state.setIn ['desires']
-
+    state.setIn ['desires', shortid()],
+        type: 'init:primus'
+        payload: null
 
 
 arq['send_ping'] = ({ state, action }) ->
-
+    state
+    # state
+arq['request_orient'] = ({ state, action }) ->
+    state.setIn ['desires', shortid()],
+        type: 'request_orient'
+        payload: null
 
 
 
@@ -27,11 +33,14 @@ arq['primus:data'] = ({ state, action }) ->
 
 keys_arq = keys arq
 lounger = (state, action) ->
+    c 'lounger has state', state
     c 'lounger has action', action
     state = state.setIn ['desires'], Imm.Map({})
     if includes(keys_arq, action.type)
+        c 'includes'
         arq[action.type]({ state, action })
     else
+        c 'noop'
         state
 
 

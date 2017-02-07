@@ -4,6 +4,13 @@
 
 arq = {}
 
+arq['request_orient'] = ({ state, action }) ->
+    c 'got the req'
+    { spark_id, token } = action.payload
+    state.setIn ['desires', shortid()],
+        type: 'request_orient'
+        payload: action.payload
+
 arq['do_login'] = ({ cs, state, action }) ->
     { spark_id, token } = action.payload
     # spark = state.getIn(['lounger_sessions', token, 'spark'])

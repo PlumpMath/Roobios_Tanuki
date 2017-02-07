@@ -6,7 +6,7 @@ thunk = require('redux-thunk').default
 middleware = thunk
 
 mocks = (state, action) ->
-    c 'action', action
+    # c 'mocks action', action
     state
 
 lounger = require('./reducers/lounger.coffee').default
@@ -14,10 +14,10 @@ lounger = require('./reducers/lounger.coffee').default
 reducers = { mocks, lounger }
 
 initial_state = require('./modules/initial_state.coffee').default
-imm_initial_state = Imm.Map initial_state
+
+imm_initial_state = Imm.fromJS(initial_state)
 
 store = createStore(combineReducers(reducers), imm_initial_state, compose(applyMiddleware(middleware)))
-
 
 side_effects = require('./side_effects.coffee').default { store }
 

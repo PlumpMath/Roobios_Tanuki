@@ -28,4 +28,4 @@ arq['primus:init_all_the_primus'] = ({ cs, state, dispatch, desire }) ->
         spark.on 'end', ->
             c color.white('todo: implement spark ending stuff')
 
-module.exports = arq
+exports.default = arq
