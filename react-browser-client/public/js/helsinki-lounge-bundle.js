@@ -15900,12 +15900,12 @@ var arq;
 arq = {};
 
 arq['orient:reply'] = function(arg) {
-  var action, data, state, username;
+  var action, data, hive, ref, state, username;
   state = arg.state, action = arg.action, data = arg.data;
-  c('into orient reply', data);
-  username = data.payload.username;
-  c('username', username);
-  return state.set('username', username);
+  ref = data.payload, username = ref.username, hive = ref.hive;
+  state = state.set('username', username);
+  state = state.set('hive', Imm.fromJS(hive));
+  return state;
 };
 
 arq['new_message'] = function(arg) {
@@ -15973,7 +15973,7 @@ arq['init:primus'] = function(arg) {
         type: 'request_orient'
       });
     };
-  })(this), 3000);
+  })(this), 300);
 };
 
 keys_arq = keys(arq);
@@ -48129,6 +48129,7 @@ change_username_input_field = function(arg) {
 };
 
 sidebar_hive = function() {
+  var key, sesh;
   return div({
     style: {
       backgroundColor: 'lightcyan',
@@ -48196,7 +48197,26 @@ sidebar_hive = function() {
       fontSize: 10,
       color: 'maroon'
     }
-  }, "People in the lounge:")));
+  }, "People in the lounge:"), (function() {
+    var ref, results;
+    if (this.props.hive) {
+      c('ready');
+      ref = this.props.hive;
+      results = [];
+      for (key in ref) {
+        sesh = ref[key];
+        results.push(p({
+          style: {
+            fontSize: 10,
+            color: 'lightblue'
+          }
+        }, sesh.username));
+      }
+      return results;
+    } else {
+      return c(this.props.hive);
+    }
+  }).call(this)));
 };
 
 central_book_and_input = function() {

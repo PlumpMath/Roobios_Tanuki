@@ -5,10 +5,11 @@ arq = {}
 
 
 arq['orient:reply'] = ({ state, action, data }) ->
-    c 'into orient reply', data
-    { username } = data.payload
-    c 'username', username
-    state.set 'username', username
+    { username, hive } = data.payload
+    state = state.set 'username', username
+    state = state.set 'hive', Imm.fromJS(hive)
+    state
+
 
 arq['new_message'] = ({ state, action, data }) ->
     c 'is in new message', data

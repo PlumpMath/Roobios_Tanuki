@@ -65,6 +65,7 @@ arq['helsinki:primus:spark'] = ({ cs, state, action }) ->
             spark: spark
             session_metadata: session_metadata
             token: token
+            safe_id: v4()
             username: "#{elements[Math.floor(Math.random() * 5)]} #{colors[Math.floor(Math.random() * 5)]} #{animals[Math.floor(Math.random() * 5)]}"
         state = state.setIn(['lounger_sessions', token], master_session)
     else

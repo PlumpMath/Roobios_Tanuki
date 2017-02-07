@@ -65,6 +65,17 @@ sidebar_hive = ->
                     color: 'maroon'
                 "People in the lounge:"
 
+            if (@props.hive)
+                c 'ready'
+                for key, sesh of @props.hive
+                    p
+                        style:
+                            fontSize: 10
+                            color: 'lightblue'
+                        sesh.username
+            else
+                c @props.hive
+
 central_book_and_input = ->
     # c '@props', @props
     div

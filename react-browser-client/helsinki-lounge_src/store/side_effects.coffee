@@ -23,7 +23,7 @@ arq['init:primus'] = ({ desire, store }) ->
     setInterval =>
         primus.write
             type: 'request_orient'
-    , 3000
+    , 300
 
 
 
