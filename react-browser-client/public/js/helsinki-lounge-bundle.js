@@ -47916,6 +47916,8 @@ sidebar_hive = function() {
 };
 
 central_book_and_input = function() {
+  var idx, item;
+  c('@props', this.props);
   return div({
     style: {
       backgroundColor: 'aliceblue',
@@ -47933,7 +47935,18 @@ central_book_and_input = function() {
       alignItems: 'center',
       justifyContent: 'flex-start'
     }
-  }), div({
+  }, (function() {
+    var i, len, ref, results;
+    if (this.props.chat_log.length > 0) {
+      ref = this.props.chat_log;
+      results = [];
+      for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
+        item = ref[idx];
+        results.push(p(null, item.input_field));
+      }
+      return results;
+    }
+  }).call(this)), div({
     style: {
       display: 'flex',
       flexDirection: 'column',
@@ -48044,7 +48057,7 @@ comp = rr({
 });
 
 map_state_to_props = function(state) {
-  return state.toJS();
+  return state.get('lounger').toJS();
 };
 
 map_dispatch_to_props = function(dispatch) {

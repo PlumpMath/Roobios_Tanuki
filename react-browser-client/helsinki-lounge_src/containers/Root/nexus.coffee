@@ -16,6 +16,7 @@ sidebar_hive = ->
             flexGrow: 1
 
 central_book_and_input = ->
+    c '@props', @props
     div
         style:
             backgroundColor: 'aliceblue'
@@ -32,6 +33,9 @@ central_book_and_input = ->
                 alignItems: 'center'
                 justifyContent: 'flex-start'
                 # height: '400px'
+            if @props.chat_log.length > 0
+                for item, idx in @props.chat_log
+                    p null, item.input_field
         div
             style:
                 display: 'flex'
@@ -117,7 +121,7 @@ comp = rr
     render: render
 
 map_state_to_props = (state) ->
-    state.toJS()
+    state.get('lounger').toJS()
 
 map_dispatch_to_props = (dispatch) ->
     send_message: ({ payload }) ->
