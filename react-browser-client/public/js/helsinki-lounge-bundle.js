@@ -15738,7 +15738,6 @@ sidebar_hive = function() {
 
 central_book_and_input = function() {
   var idx, item;
-  c('@props', this.props);
   return div({
     style: {
       backgroundColor: 'aliceblue',
@@ -15763,7 +15762,14 @@ central_book_and_input = function() {
       results = [];
       for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
         item = ref[idx];
-        results.push(p(null, item.input_field));
+        results.push(p({
+          key: "messg:" + idx,
+          style: {
+            height: 16,
+            margin: 0,
+            fontSize: 12
+          }
+        }, item.input_field));
       }
       return results;
     }
@@ -15783,6 +15789,7 @@ central_book_and_input = function() {
       color: 'grey',
       padding: '8px'
     },
+    value: this.state.input_field,
     type: 'text',
     placeholder: 'chat here',
     onFocus: (function(_this) {
@@ -15858,10 +15865,13 @@ comp = rr({
         keycode = e.keycode || e.which;
         if (keycode === 13) {
           if (_this.state.input_focus === true) {
-            return _this.props.send_message({
+            _this.props.send_message({
               payload: {
                 input_field: _this.state.input_field
               }
+            });
+            return _this.setState({
+              input_field: ''
             });
           }
         }

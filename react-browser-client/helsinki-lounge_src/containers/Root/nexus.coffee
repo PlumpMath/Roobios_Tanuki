@@ -5,9 +5,6 @@ change_input_field = ({ val }) ->
     @setState
         input_field: val
 
-
-
-
 sidebar_hive = ->
     div
         style:
@@ -16,7 +13,7 @@ sidebar_hive = ->
             flexGrow: 1
 
 central_book_and_input = ->
-    c '@props', @props
+    # c '@props', @props
     div
         style:
             backgroundColor: 'aliceblue'
@@ -35,7 +32,13 @@ central_book_and_input = ->
                 # height: '400px'
             if @props.chat_log.length > 0
                 for item, idx in @props.chat_log
-                    p null, item.input_field
+                    p
+                        key: "messg:#{idx}"
+                        style:
+                            height: 16
+                            margin: 0
+                            fontSize: 12
+                        item.input_field
         div
             style:
                 display: 'flex'
@@ -50,6 +53,7 @@ central_book_and_input = ->
                     fontSize: 16
                     color: 'grey'
                     padding: '8px'
+                value: @state.input_field
                 type: 'text'
                 placeholder: 'chat here'
                 onFocus: (e) =>
@@ -113,6 +117,8 @@ comp = rr
                     @props.send_message
                         payload:
                             input_field: @state.input_field
+                    @setState
+                        input_field: ''
 
     getInitialState: ->
         input_focus: false
