@@ -7,19 +7,28 @@
 
 render = ->
     { item, idx } = @props
-    div null,
+    div
+        key: "messg:#{idx}"
+        style:
+
+            display: 'flex'
+            alignItems: 'flex-start'
+            justifyContent: 'flex-start'
         span
             style:
+                width: 160
+                # backgroundColor: 'magenta'
                 color: 'plum'
-            @props.hive[item.safe_id].username
+                padding: 4
+                fontSize: 10
+            @props.hive[item.safe_id].username + ': '
 
         span
-            key: "messg:#{idx}"
             style:
+                # paddingLeft: 1
                 height: 16
-                margin: 0
-                padding: 8
-                fontSize: 12
+                # marginLeft: 40
+                fontSize: 10
             item.input_field
 
 

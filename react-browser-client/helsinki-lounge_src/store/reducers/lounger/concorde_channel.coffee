@@ -5,9 +5,11 @@ arq = {}
 
 
 arq['orient:reply'] = ({ state, action, data }) ->
-    { username, hive } = data.payload
+    { username, hive, chat_log } = data.payload
+    c 'chat_log', chat_log
     state = state.set 'username', username
     state = state.set 'hive', Imm.fromJS(hive)
+    state= state.set 'chat_log', chat_log
     state
 
 

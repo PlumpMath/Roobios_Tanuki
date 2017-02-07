@@ -77,6 +77,33 @@ sidebar_hive = ->
 
 message_card = rc require('./chat_lounge/message_card.coffee').default
 
+
+chat_log = ->
+    div
+        style:
+            backgroundColor: 'ivory'
+            display: 'flex'
+            flexGrow: 8
+            width: '100%'
+            flexDirection: 'column'
+            alignItems: 'flex-start'
+            justifyContent: 'flex-start'
+            # height: '400px'
+        # div
+        #     style:
+        #         display: 'flex'
+        #         backgroundColor: 'blue'
+        #         opacity: .4
+        #     div
+        #         style:
+        #             backgroundColor: 'green'
+        #         "username"
+
+        if @props.chat_log.length > 0
+            for item, idx in @props.chat_log
+                message_card.bind(@) { item, idx }
+
+
 central_book_and_input = ->
     # c '@props', @props
     div
@@ -85,19 +112,7 @@ central_book_and_input = ->
             display: 'flex'
             flexDirection: 'column'
             flexGrow: 4
-        div
-            style:
-                backgroundColor: 'ivory'
-                display: 'flex'
-                flexGrow: 8
-                width: '100%'
-                flexDirection: 'column'
-                alignItems: 'center'
-                justifyContent: 'flex-start'
-                # height: '400px'
-            if @props.chat_log.length > 0
-                for item, idx in @props.chat_log
-                    message_card.bind(@) { item, idx }
+        chat_log.bind(@)()
 
         div
             style:

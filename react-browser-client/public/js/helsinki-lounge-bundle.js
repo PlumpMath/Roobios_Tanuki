@@ -15900,11 +15900,13 @@ var arq;
 arq = {};
 
 arq['orient:reply'] = function(arg) {
-  var action, data, hive, ref, state, username;
+  var action, chat_log, data, hive, ref, state, username;
   state = arg.state, action = arg.action, data = arg.data;
-  ref = data.payload, username = ref.username, hive = ref.hive;
+  ref = data.payload, username = ref.username, hive = ref.hive, chat_log = ref.chat_log;
+  c('chat_log', chat_log);
   state = state.set('username', username);
   state = state.set('hive', Imm.fromJS(hive));
+  state = state.set('chat_log', chat_log);
   return state;
 };
 
@@ -48101,7 +48103,7 @@ module.exports = __webpack_require__(98);
 /* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var central_book_and_input, change_input_field, change_username_input_field, comp, map_dispatch_to_props, map_state_to_props, message_card, render, sidebar_hive, the_whole;
+var central_book_and_input, change_input_field, change_username_input_field, chat_log, comp, map_dispatch_to_props, map_state_to_props, message_card, render, sidebar_hive, the_whole;
 
 change_input_field = function(arg) {
   var val;
@@ -48211,23 +48213,16 @@ sidebar_hive = function() {
 
 message_card = rc(__webpack_require__(250)["default"]);
 
-central_book_and_input = function() {
+chat_log = function() {
   var idx, item;
   return div({
-    style: {
-      backgroundColor: 'aliceblue',
-      display: 'flex',
-      flexDirection: 'column',
-      flexGrow: 4
-    }
-  }, div({
     style: {
       backgroundColor: 'ivory',
       display: 'flex',
       flexGrow: 8,
       width: '100%',
       flexDirection: 'column',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'flex-start'
     }
   }, (function() {
@@ -48244,7 +48239,18 @@ central_book_and_input = function() {
       }
       return results;
     }
-  }).call(this)), div({
+  }).call(this));
+};
+
+central_book_and_input = function() {
+  return div({
+    style: {
+      backgroundColor: 'aliceblue',
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 4
+    }
+  }, chat_log.bind(this)(), div({
     style: {
       display: 'flex',
       flexDirection: 'column',
@@ -48417,17 +48423,24 @@ var comp, map_dispatch_to_props, map_state_to_props, render;
 render = function() {
   var idx, item, ref;
   ref = this.props, item = ref.item, idx = ref.idx;
-  return div(null, span({
-    style: {
-      color: 'plum'
-    }
-  }, this.props.hive[item.safe_id].username), span({
+  return div({
     key: "messg:" + idx,
     style: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start'
+    }
+  }, span({
+    style: {
+      width: 160,
+      color: 'plum',
+      padding: 4,
+      fontSize: 10
+    }
+  }, this.props.hive[item.safe_id].username + ': '), span({
+    style: {
       height: 16,
-      margin: 0,
-      padding: 8,
-      fontSize: 12
+      fontSize: 10
     }
   }, item.input_field));
 };
