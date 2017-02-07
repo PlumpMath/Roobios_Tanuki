@@ -2,8 +2,25 @@
 
 
 
+
+
+
 render = ->
-    div null, 'hi'
+    { item, idx } = @props
+    div null,
+        span
+            style:
+                color: 'plum'
+            @props.hive[item.safe_id].username
+
+        span
+            key: "messg:#{idx}"
+            style:
+                height: 16
+                margin: 0
+                padding: 8
+                fontSize: 12
+            item.input_field
 
 
 comp = rr

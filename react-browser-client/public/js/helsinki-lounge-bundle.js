@@ -48099,9 +48099,9 @@ module.exports = __webpack_require__(98);
 
 /***/ }),
 /* 249 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var central_book_and_input, change_input_field, change_username_input_field, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
+var central_book_and_input, change_input_field, change_username_input_field, comp, map_dispatch_to_props, map_state_to_props, message_card, render, sidebar_hive, the_whole;
 
 change_input_field = function(arg) {
   var val;
@@ -48209,6 +48209,8 @@ sidebar_hive = function() {
   }).call(this)));
 };
 
+message_card = rc(__webpack_require__(250)["default"]);
+
 central_book_and_input = function() {
   var idx, item;
   return div({
@@ -48235,21 +48237,10 @@ central_book_and_input = function() {
       results = [];
       for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
         item = ref[idx];
-        c('item', item);
-        c(this.props.hive);
-        results.push(div(null, span({
-          style: {
-            color: 'red'
-          }
-        }, this.props.hive[item.safe_id].username), span({
-          key: "messg:" + idx,
-          style: {
-            height: 16,
-            margin: 0,
-            padding: 8,
-            fontSize: 12
-          }
-        }, item.input_field)));
+        results.push(message_card.bind(this)({
+          item: item,
+          idx: idx
+        }));
       }
       return results;
     }
@@ -48412,6 +48403,45 @@ map_dispatch_to_props = function(dispatch) {
       });
     }
   };
+};
+
+exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
+
+
+/***/ }),
+/* 250 */
+/***/ (function(module, exports) {
+
+var comp, map_dispatch_to_props, map_state_to_props, render;
+
+render = function() {
+  var idx, item, ref;
+  ref = this.props, item = ref.item, idx = ref.idx;
+  return div(null, span({
+    style: {
+      color: 'plum'
+    }
+  }, this.props.hive[item.safe_id].username), span({
+    key: "messg:" + idx,
+    style: {
+      height: 16,
+      margin: 0,
+      padding: 8,
+      fontSize: 12
+    }
+  }, item.input_field));
+};
+
+comp = rr({
+  render: render
+});
+
+map_state_to_props = function(state) {
+  return state.get('lounger').toJS();
+};
+
+map_dispatch_to_props = function(dispatch) {
+  return {};
 };
 
 exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);

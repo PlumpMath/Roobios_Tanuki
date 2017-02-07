@@ -75,6 +75,8 @@ sidebar_hive = ->
             else
                 c @props.hive
 
+message_card = rc require('./chat_lounge/message_card.coffee').default
+
 central_book_and_input = ->
     # c '@props', @props
     div
@@ -95,22 +97,8 @@ central_book_and_input = ->
                 # height: '400px'
             if @props.chat_log.length > 0
                 for item, idx in @props.chat_log
-                    c 'item', item
-                    c @props.hive
-                    div null,
-                        span
-                            style:
-                                color: 'red'
-                            @props.hive[item.safe_id].username
+                    message_card.bind(@) { item, idx }
 
-                        span
-                            key: "messg:#{idx}"
-                            style:
-                                height: 16
-                                margin: 0
-                                padding: 8
-                                fontSize: 12
-                            item.input_field
         div
             style:
                 display: 'flex'
