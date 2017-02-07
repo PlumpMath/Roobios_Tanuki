@@ -5,7 +5,6 @@
 arq = {}
 
 arq['request_orient'] = ({ state, action }) ->
-    c 'got the req'
     { spark_id, token } = action.payload
     state.setIn ['desires', shortid()],
         type: 'request_orient'

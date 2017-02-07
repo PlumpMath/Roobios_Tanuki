@@ -15628,7 +15628,7 @@ window.onload = function() {
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var a, body, bursar, circle, clipPath, code, d, defs, div, dom_stuff, ellipse, feBlend, feGaussianBlur, feMerge, feMergeNode, feOffset, filter, foreignObject, form, g, h1, h2, h3, h4, h5, h6, i, image, input, item, k, len, li, line, linearGradient, ol, p, path, pattern, polygon, polyline, pre, radialGradient, rect, ref, ref1, span, stop, strong, svg, tbody, text, textArea, th, thead, tr, tspan, ul, v;
+var a, body, circle, clipPath, code, d, defs, div, dom_stuff, ellipse, feBlend, feGaussianBlur, feMerge, feMergeNode, feOffset, filter, foreignObject, form, g, h1, h2, h3, h4, h5, h6, i, image, input, item, k, len, li, line, linearGradient, ol, p, path, pattern, polygon, polyline, pre, radialGradient, rect, ref, ref1, span, stop, strong, svg, tbody, text, textArea, th, thead, tr, tspan, ul, v;
 
 window.c = console.log.bind(console);
 
@@ -15649,18 +15649,6 @@ window.connect = __webpack_require__(86).connect;
 window.Imm = __webpack_require__(35);
 
 window.primus = new Primus('http://localhost:6494', {});
-
-bursar = setInterval((function(_this) {
-  return function() {
-    return primus.write({
-      event_type: 'gogogo'
-    });
-  };
-})(this), 4000);
-
-primus.on('data', function(data) {
-  return c('data', data);
-});
 
 window.debounce = function(fn, wait, immediate) {
   var timeout;
@@ -47910,11 +47898,51 @@ var comp, map_dispatch_to_props, map_state_to_props, render;
 
 render = function() {
   var ref, wh, ww;
-  c('in render with @props', this.props);
   ref = this.props, ww = ref.ww, wh = ref.wh;
-  return div(null, h1(null, "hi thene."), input({
+  return div({
+    style: {
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      backgroundColor: 'burlywood'
+    }
+  }, div({
+    style: {
+      flexGrow: 1
+    }
+  }, h1({
+    style: {
+      color: 'azure'
+    }
+  }, "The Chat")), div({
+    style: {
+      backgroundColor: 'ivory',
+      display: 'flex',
+      flexGrow: 8,
+      width: '100%',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start'
+    }
+  }), div({
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexGrow: 2
+    }
+  }, input({
+    style: {
+      width: '400px',
+      height: '40px',
+      padding: '8px'
+    },
     type: 'text',
-    placeholder: 'go there',
+    placeholder: 'chat here',
     onChange: (function(_this) {
       return function(e) {
         return _this.props.ping_test({
@@ -47922,7 +47950,7 @@ render = function() {
         });
       };
     })(this)
-  }));
+  })));
 };
 
 comp = rr({
@@ -47966,12 +47994,6 @@ arq['init:primus'] = function(arg) {
   });
 };
 
-arq['send_ping'] = function(arg) {
-  var action, state;
-  state = arg.state, action = arg.action;
-  return state;
-};
-
 arq['request_orient'] = function(arg) {
   var action, state;
   state = arg.state, action = arg.action;
@@ -48004,8 +48026,6 @@ arq['primus:data'] = function(arg) {
 keys_arq = keys(arq);
 
 lounger = function(state, action) {
-  c('lounger has state', state);
-  c('lounger has action', action);
   state = state.setIn(['desires'], Imm.Map({}));
   if (includes(keys_arq, action.type)) {
     c('includes');
@@ -48052,14 +48072,11 @@ arq['init:primus'] = function(arg) {
   var desire, store;
   desire = arg.desire, store = arg.store;
   primus.on('data', function(data) {
-    store.dispatch({
+    return store.dispatch({
       type: 'primus:data',
       payload: {
         data: data
       }
-    });
-    return primus.write({
-      type: 'request_orient'
     });
   });
   return setInterval((function(_this) {

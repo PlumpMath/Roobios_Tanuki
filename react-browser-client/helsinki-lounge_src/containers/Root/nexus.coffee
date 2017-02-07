@@ -1,15 +1,64 @@
 
+
+
+
+
+
+
+
+
+
 render = ->
-    c 'in render with @props', @props
+    # c 'in render with @props', @props
     { ww, wh } = @props
-    div null,
-        h1 null, "hi thene."
-        input
-            type: 'text'
-            placeholder: 'go there'
-            onChange: (e) =>
-                @props.ping_test
-                    payload: e.target.value
+    div
+        style:
+            height: '100%'
+            width: '100%'
+            display: 'flex'
+            flexDirection: 'column'
+            alignItems: 'center'
+            justifyContent: 'flex-start'
+            backgroundColor: 'burlywood'
+
+        div
+            style:
+                flexGrow: 1
+            h1
+                style:
+                    color: 'azure'
+                "The Chat"
+
+        div
+            style:
+                backgroundColor: 'ivory'
+                display: 'flex'
+                flexGrow: 8
+                width: '100%'
+                flexDirection: 'column'
+                alignItems: 'center'
+                justifyContent: 'flex-start'
+                # height: '400px'
+
+
+
+        div
+            style:
+                display: 'flex'
+                flexDirection: 'column'
+                alignItems: 'center'
+                justifyContent: 'center'
+                flexGrow: 2
+            input
+                style:
+                    width: '400px'
+                    height: '40px'
+                    padding: '8px'
+                type: 'text'
+                placeholder: 'chat here'
+                onChange: (e) =>
+                    @props.ping_test
+                        payload: e.target.value
 
 
 comp = rr

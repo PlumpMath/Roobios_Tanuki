@@ -12,9 +12,6 @@ arq['init:primus'] = ({ desire, store }) ->
             type: 'primus:data'
             payload: { data }
 
-        primus.write
-            type: 'request_orient'
-
     setInterval =>
         primus.write
             type: 'request_orient'
