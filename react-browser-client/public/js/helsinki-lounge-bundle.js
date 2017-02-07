@@ -15576,7 +15576,7 @@ function warning(message) {
 /* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Provider, nexus, ready__stub, root_component, root_el, set_and_render, store;
+var Provider, nexus, root_component, root_el, set_and_render, store;
 
 console.log('hi');
 
@@ -15589,12 +15589,6 @@ Provider = rc(__webpack_require__(86).Provider);
 store = __webpack_require__(101);
 
 nexus = rc(__webpack_require__(100)["default"]);
-
-ready__stub = function() {
-  var ref, wh, ww;
-  ref = this.props, ww = ref.ww, wh = ref.wh;
-  return div(null, p(null, 'hello38838302929'), p(null, 'stnhstnhstnhstnh'));
-};
 
 root_component = rr({
   render: function() {
@@ -15714,291 +15708,31 @@ window.get_abs_val_open = function(fig_raw) {
 
 /***/ }),
 /* 100 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var central_book_and_input, change_input_field, change_username_input_field, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
+var chat_lounge, comp, map_dispatch_to_props, map_state_to_props, render;
 
-change_input_field = function(arg) {
-  var val;
-  val = arg.val;
-  return this.setState({
-    input_field: val
-  });
-};
-
-change_username_input_field = function(arg) {
-  var val;
-  val = arg.val;
-  return this.setState({
-    username_input_field: val
-  });
-};
-
-sidebar_hive = function() {
-  return div({
-    style: {
-      backgroundColor: 'lightcyan',
-      display: 'flex',
-      flexGrow: 1,
-      flexDirection: 'column'
-    }
-  }, div({
-    style: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'lavender',
-      width: '100%',
-      height: '20%'
-    }
-  }, p({
-    style: {
-      fontSize: 10,
-      color: 'maroon'
-    }
-  }, "Your name: " + this.state.username), input({
-    style: {
-      fontSize: 12,
-      color: 'darkgrey',
-      padding: 8
-    },
-    type: 'text',
-    placeholder: "set username",
-    value: this.state.username_input_field,
-    onFocus: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          username_input_focus: true
-        });
-      };
-    })(this),
-    onBlur: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          username_input_focus: false
-        });
-      };
-    })(this),
-    onChange: (function(_this) {
-      return function(e) {
-        return change_username_input_field.bind(_this)({
-          val: e.target.value
-        });
-      };
-    })(this)
-  })), div({
-    style: {
-      backgroundColor: 'lemonchiffon',
-      width: '100%',
-      height: '80%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start'
-    }
-  }, p({
-    style: {
-      fontSize: 10,
-      color: 'maroon'
-    }
-  }, "People in the lounge:")));
-};
-
-central_book_and_input = function() {
-  var idx, item;
-  return div({
-    style: {
-      backgroundColor: 'aliceblue',
-      display: 'flex',
-      flexDirection: 'column',
-      flexGrow: 4
-    }
-  }, div({
-    style: {
-      backgroundColor: 'ivory',
-      display: 'flex',
-      flexGrow: 8,
-      width: '100%',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start'
-    }
-  }, (function() {
-    var i, len, ref, results;
-    if (this.props.chat_log.length > 0) {
-      ref = this.props.chat_log;
-      results = [];
-      for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
-        item = ref[idx];
-        results.push(p({
-          key: "messg:" + idx,
-          style: {
-            height: 16,
-            margin: 0,
-            fontSize: 12
-          }
-        }, item.input_field));
-      }
-      return results;
-    }
-  }).call(this)), div({
-    style: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexGrow: 2
-    }
-  }, input({
-    style: {
-      width: '400px',
-      height: 20,
-      fontSize: 16,
-      color: 'grey',
-      padding: '8px'
-    },
-    value: this.state.input_field,
-    type: 'text',
-    placeholder: 'chat here',
-    onFocus: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          input_focus: true
-        });
-      };
-    })(this),
-    onBlur: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          input_focus: false
-        });
-      };
-    })(this),
-    onChange: (function(_this) {
-      return function(e) {
-        return change_input_field.bind(_this)({
-          val: e.target.value
-        });
-      };
-    })(this)
-  })));
-};
-
-the_whole = function() {
-  var ref, wh, ww;
-  ref = this.props, ww = ref.ww, wh = ref.wh;
-  return div({
-    style: {
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      backgroundColor: 'snow'
-    }
-  }, div({
-    style: {
-      flexGrow: 1,
-      maxHeight: 50,
-      flexShrink: 4
-    }
-  }, h2({
-    style: {
-      height: 60,
-      color: 'grey',
-      fontFamily: 'sans'
-    }
-  }, "The Chat")), div({
-    style: {
-      display: 'flex',
-      flexGrow: 23,
-      width: '100%',
-      backgroundColor: 'aliceblue'
-    }
-  }, sidebar_hive.bind(this)(), central_book_and_input.bind(this)()));
-};
+chat_lounge = rc(__webpack_require__(249)["default"]);
 
 render = function() {
   var ref, wh, ww;
   ref = this.props, ww = ref.ww, wh = ref.wh;
-  return the_whole.bind(this)();
+  return chat_lounge({
+    ww: ww,
+    wh: wh
+  });
 };
 
 comp = rr({
-  componentDidMount: function() {
-    return document.onkeydown = (function(_this) {
-      return function(e) {
-        var keycode;
-        keycode = e.keycode || e.which;
-        if (keycode === 13) {
-          if (_this.state.input_focus === true) {
-            _this.props.send_message({
-              payload: {
-                input_field: _this.state.input_field
-              }
-            });
-            return _this.setState({
-              input_field: ''
-            });
-          } else if (_this.state.username_input_focus === true) {
-            _this.props.change_username({
-              payload: {
-                username_input_field: _this.state.username_input_field
-              }
-            });
-            return _this.setState({
-              username_input_field: ''
-            });
-          }
-        }
-      };
-    })(this);
-  },
-  getInitialState: function() {
-    return {
-      input_focus: false,
-      username_input_focus: false,
-      input_field: '',
-      username_input_field: '',
-      username: 'placeholder username'
-    };
-  },
   render: render
 });
 
 map_state_to_props = function(state) {
-  return state.get('lounger').toJS();
+  return {};
 };
 
 map_dispatch_to_props = function(dispatch) {
-  return {
-    change_username: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'change_username',
-        payload: payload
-      });
-    },
-    send_message: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'send_message',
-        payload: payload
-      });
-    },
-    request_orient: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'request_orient',
-        payload: payload
-      });
-    }
-  };
+  return {};
 };
 
 exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
@@ -48351,6 +48085,298 @@ function symbolObservablePonyfill(root) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(98);
+
+
+/***/ }),
+/* 249 */
+/***/ (function(module, exports) {
+
+var central_book_and_input, change_input_field, change_username_input_field, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
+
+change_input_field = function(arg) {
+  var val;
+  val = arg.val;
+  return this.setState({
+    input_field: val
+  });
+};
+
+change_username_input_field = function(arg) {
+  var val;
+  val = arg.val;
+  return this.setState({
+    username_input_field: val
+  });
+};
+
+sidebar_hive = function() {
+  return div({
+    style: {
+      backgroundColor: 'lightcyan',
+      display: 'flex',
+      flexGrow: 1,
+      flexDirection: 'column'
+    }
+  }, div({
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'lavender',
+      width: '100%',
+      height: '20%'
+    }
+  }, p({
+    style: {
+      fontSize: 10,
+      color: 'maroon'
+    }
+  }, "Your name: " + this.state.username), input({
+    style: {
+      fontSize: 12,
+      color: 'darkgrey',
+      padding: 8
+    },
+    type: 'text',
+    placeholder: "set username",
+    value: this.state.username_input_field,
+    onFocus: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          username_input_focus: true
+        });
+      };
+    })(this),
+    onBlur: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          username_input_focus: false
+        });
+      };
+    })(this),
+    onChange: (function(_this) {
+      return function(e) {
+        return change_username_input_field.bind(_this)({
+          val: e.target.value
+        });
+      };
+    })(this)
+  })), div({
+    style: {
+      backgroundColor: 'lemonchiffon',
+      width: '100%',
+      height: '80%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start'
+    }
+  }, p({
+    style: {
+      fontSize: 10,
+      color: 'maroon'
+    }
+  }, "People in the lounge:")));
+};
+
+central_book_and_input = function() {
+  var idx, item;
+  return div({
+    style: {
+      backgroundColor: 'aliceblue',
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 4
+    }
+  }, div({
+    style: {
+      backgroundColor: 'ivory',
+      display: 'flex',
+      flexGrow: 8,
+      width: '100%',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start'
+    }
+  }, (function() {
+    var i, len, ref, results;
+    if (this.props.chat_log.length > 0) {
+      ref = this.props.chat_log;
+      results = [];
+      for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
+        item = ref[idx];
+        results.push(p({
+          key: "messg:" + idx,
+          style: {
+            height: 16,
+            margin: 0,
+            fontSize: 12
+          }
+        }, item.input_field));
+      }
+      return results;
+    }
+  }).call(this)), div({
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexGrow: 2
+    }
+  }, input({
+    style: {
+      width: '400px',
+      height: 20,
+      fontSize: 16,
+      color: 'grey',
+      padding: '8px'
+    },
+    value: this.state.input_field,
+    type: 'text',
+    placeholder: 'chat here',
+    onFocus: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_focus: true
+        });
+      };
+    })(this),
+    onBlur: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_focus: false
+        });
+      };
+    })(this),
+    onChange: (function(_this) {
+      return function(e) {
+        return change_input_field.bind(_this)({
+          val: e.target.value
+        });
+      };
+    })(this)
+  })));
+};
+
+the_whole = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return div({
+    style: {
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      backgroundColor: 'snow'
+    }
+  }, div({
+    style: {
+      flexGrow: 1,
+      maxHeight: 50,
+      flexShrink: 4
+    }
+  }, h2({
+    style: {
+      height: 60,
+      color: 'grey',
+      fontFamily: 'sans'
+    }
+  }, "The Chat")), div({
+    style: {
+      display: 'flex',
+      flexGrow: 23,
+      width: '100%',
+      backgroundColor: 'aliceblue'
+    }
+  }, sidebar_hive.bind(this)(), central_book_and_input.bind(this)()));
+};
+
+render = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return the_whole.bind(this)();
+};
+
+comp = rr({
+  componentDidMount: function() {
+    return document.onkeydown = (function(_this) {
+      return function(e) {
+        var keycode;
+        keycode = e.keycode || e.which;
+        if (keycode === 13) {
+          if (_this.state.input_focus === true) {
+            _this.props.send_message({
+              payload: {
+                input_field: _this.state.input_field
+              }
+            });
+            return _this.setState({
+              input_field: ''
+            });
+          } else if (_this.state.username_input_focus === true) {
+            _this.props.change_username({
+              payload: {
+                username_input_field: _this.state.username_input_field
+              }
+            });
+            return _this.setState({
+              username_input_field: ''
+            });
+          }
+        }
+      };
+    })(this);
+  },
+  getInitialState: function() {
+    return {
+      input_focus: false,
+      username_input_focus: false,
+      input_field: '',
+      username_input_field: '',
+      username: 'placeholder username'
+    };
+  },
+  render: render
+});
+
+map_state_to_props = function(state) {
+  return state.get('lounger').toJS();
+};
+
+map_dispatch_to_props = function(dispatch) {
+  return {
+    change_username: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'change_username',
+        payload: payload
+      });
+    },
+    send_message: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'send_message',
+        payload: payload
+      });
+    },
+    request_orient: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'request_orient',
+        payload: payload
+      });
+    }
+  };
+};
+
+exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
 
 
 /***/ })
