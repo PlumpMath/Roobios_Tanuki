@@ -48755,7 +48755,146 @@ module.exports = __webpack_require__(98);
 /* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var central_book_and_input, change_input_field, change_username_input_field, chat_log, comp, map_dispatch_to_props, map_state_to_props, message_card, render, sidebar_hive, the_whole;
+var central_book_and_input, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
+
+sidebar_hive = __webpack_require__(254)["default"];
+
+central_book_and_input = __webpack_require__(253)["default"];
+
+the_whole = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return div({
+    style: {
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      backgroundColor: 'snow'
+    }
+  }, div({
+    style: {
+      flexGrow: 1,
+      maxHeight: 50,
+      flexShrink: 4
+    }
+  }, h2({
+    style: {
+      height: 60,
+      color: 'grey',
+      fontFamily: 'sans'
+    }
+  }, "The Chat")), div({
+    style: {
+      display: 'flex',
+      flexGrow: 23,
+      width: '100%',
+      backgroundColor: 'aliceblue'
+    }
+  }, sidebar_hive.bind(this)(), central_book_and_input.bind(this)()));
+};
+
+render = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return the_whole.bind(this)();
+};
+
+comp = rr({
+  componentDidMount: function() {
+    window.keypress_ee = new EE();
+    document.onkeydown = (function(_this) {
+      return function(e) {
+        var keycode;
+        keycode = e.keycode || e.which;
+        if (keycode === 13) {
+          return keypress_ee.emit('new_keypress_enter');
+        } else if (keycode === 27) {
+          return keypress_ee.emit('new_keypress_escape');
+        }
+      };
+    })(this);
+    return keypress_ee.on('new_keypress_enter', (function(_this) {
+      return function() {
+        if (_this.state.input_focus === true) {
+          _this.props.send_message({
+            payload: {
+              input_field: _this.state.input_field
+            }
+          });
+          return _this.setState({
+            input_field: ''
+          });
+        } else if (_this.state.username_input_focus === true) {
+          _this.props.change_username({
+            payload: {
+              username_input_field: _this.state.username_input_field
+            }
+          });
+          return _this.setState({
+            username_input_field: ''
+          });
+        } else {
+          return c('there');
+        }
+      };
+    })(this));
+  },
+  getInitialState: function() {
+    return {
+      input_focus: false,
+      username_input_focus: false,
+      input_field: '',
+      username_input_field: '',
+      username: this.props.username
+    };
+  },
+  render: render
+});
+
+map_state_to_props = function(state) {
+  return state.get('lounger').toJS();
+};
+
+map_dispatch_to_props = function(dispatch) {
+  return {
+    change_username: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'change_username',
+        payload: payload
+      });
+    },
+    send_message: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'send_message',
+        payload: payload
+      });
+    },
+    request_orient: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'request_orient',
+        payload: payload
+      });
+    }
+  };
+};
+
+exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
+
+
+/***/ }),
+/* 253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var central_book_and_input, change_input_field, chat_log, message_card;
 
 change_input_field = function(arg) {
   var val;
@@ -48764,6 +48903,99 @@ change_input_field = function(arg) {
     input_field: val
   });
 };
+
+message_card = rc(__webpack_require__(102)["default"]);
+
+chat_log = function() {
+  var idx, item, ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  c('wh here', wh);
+  return div({
+    style: {
+      overflowY: 'scroll',
+      overflowX: 'hidden',
+      maxHeight: .8 * wh,
+      backgroundColor: 'ivory',
+      flexGrow: 8,
+      width: '100%',
+      flexDirection: 'column'
+    }
+  }, (function() {
+    var i, len, ref1, results;
+    if (this.props.chat_log.length > 0) {
+      ref1 = this.props.chat_log;
+      results = [];
+      for (idx = i = 0, len = ref1.length; i < len; idx = ++i) {
+        item = ref1[idx];
+        results.push(message_card.bind(this)({
+          item: item,
+          idx: idx
+        }));
+      }
+      return results;
+    }
+  }).call(this));
+};
+
+central_book_and_input = function() {
+  return div({
+    style: {
+      backgroundColor: 'aliceblue',
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 4
+    }
+  }, chat_log.bind(this)(), div({
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexGrow: 2
+    }
+  }, input({
+    style: {
+      width: '400px',
+      height: 20,
+      fontSize: 16,
+      color: 'grey',
+      padding: '8px'
+    },
+    value: this.state.input_field,
+    type: 'text',
+    placeholder: '∫ f(x) dx',
+    onFocus: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_focus: true
+        });
+      };
+    })(this),
+    onBlur: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_focus: false
+        });
+      };
+    })(this),
+    onChange: (function(_this) {
+      return function(e) {
+        return change_input_field.bind(_this)({
+          val: e.target.value
+        });
+      };
+    })(this)
+  })));
+};
+
+exports["default"] = central_book_and_input;
+
+
+/***/ }),
+/* 254 */
+/***/ (function(module, exports) {
+
+var change_username_input_field, sidebar_hive;
 
 change_username_input_field = function(arg) {
   var val;
@@ -48863,217 +49095,7 @@ sidebar_hive = function() {
   }).call(this)));
 };
 
-message_card = rc(__webpack_require__(102)["default"]);
-
-chat_log = function() {
-  var idx, item;
-  return div({
-    style: {
-      backgroundColor: 'ivory',
-      display: 'flex',
-      flexGrow: 8,
-      width: '100%',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      justifyContent: 'flex-start'
-    }
-  }, (function() {
-    var i, len, ref, results;
-    if (this.props.chat_log.length > 0) {
-      ref = this.props.chat_log;
-      results = [];
-      for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
-        item = ref[idx];
-        results.push(message_card.bind(this)({
-          item: item,
-          idx: idx
-        }));
-      }
-      return results;
-    }
-  }).call(this));
-};
-
-central_book_and_input = function() {
-  return div({
-    style: {
-      backgroundColor: 'aliceblue',
-      display: 'flex',
-      flexDirection: 'column',
-      flexGrow: 4
-    }
-  }, chat_log.bind(this)(), div({
-    style: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexGrow: 2
-    }
-  }, input({
-    style: {
-      width: '400px',
-      height: 20,
-      fontSize: 16,
-      color: 'grey',
-      padding: '8px'
-    },
-    value: this.state.input_field,
-    type: 'text',
-    placeholder: 'chat here',
-    onFocus: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          input_focus: true
-        });
-      };
-    })(this),
-    onBlur: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          input_focus: false
-        });
-      };
-    })(this),
-    onChange: (function(_this) {
-      return function(e) {
-        return change_input_field.bind(_this)({
-          val: e.target.value
-        });
-      };
-    })(this)
-  })));
-};
-
-the_whole = function() {
-  var ref, wh, ww;
-  ref = this.props, ww = ref.ww, wh = ref.wh;
-  return div({
-    style: {
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      backgroundColor: 'snow'
-    }
-  }, div({
-    style: {
-      flexGrow: 1,
-      maxHeight: 50,
-      flexShrink: 4
-    }
-  }, h2({
-    style: {
-      height: 60,
-      color: 'grey',
-      fontFamily: 'sans'
-    }
-  }, "The Chat")), div({
-    style: {
-      display: 'flex',
-      flexGrow: 23,
-      width: '100%',
-      backgroundColor: 'aliceblue'
-    }
-  }, sidebar_hive.bind(this)(), central_book_and_input.bind(this)()));
-};
-
-render = function() {
-  var ref, wh, ww;
-  ref = this.props, ww = ref.ww, wh = ref.wh;
-  return the_whole.bind(this)();
-};
-
-comp = rr({
-  componentDidMount: function() {
-    window.keypress_ee = new EE();
-    document.onkeydown = (function(_this) {
-      return function(e) {
-        var keycode;
-        keycode = e.keycode || e.which;
-        if (keycode === 13) {
-          c('enter keypress');
-          return keypress_ee.emit('new_keypress_enter');
-        } else if (keycode === 27) {
-          c('escape keypress');
-          return keypress_ee.emit('new_keypress_escape');
-        }
-      };
-    })(this);
-    return keypress_ee.on('new_keypress_enter', (function(_this) {
-      return function() {
-        if (_this.state.input_focus === true) {
-          _this.props.send_message({
-            payload: {
-              input_field: _this.state.input_field
-            }
-          });
-          return _this.setState({
-            input_field: ''
-          });
-        } else if (_this.state.username_input_focus === true) {
-          _this.props.change_username({
-            payload: {
-              username_input_field: _this.state.username_input_field
-            }
-          });
-          return _this.setState({
-            username_input_field: ''
-          });
-        } else {
-          return c('there');
-        }
-      };
-    })(this));
-  },
-  getInitialState: function() {
-    return {
-      input_focus: false,
-      username_input_focus: false,
-      input_field: '',
-      username_input_field: '',
-      username: this.props.username
-    };
-  },
-  render: render
-});
-
-map_state_to_props = function(state) {
-  return state.get('lounger').toJS();
-};
-
-map_dispatch_to_props = function(dispatch) {
-  return {
-    change_username: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'change_username',
-        payload: payload
-      });
-    },
-    send_message: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'send_message',
-        payload: payload
-      });
-    },
-    request_orient: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'request_orient',
-        payload: payload
-      });
-    }
-  };
-};
-
-exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
+exports["default"] = sidebar_hive;
 
 
 /***/ })
