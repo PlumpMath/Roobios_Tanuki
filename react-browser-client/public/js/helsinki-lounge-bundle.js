@@ -15824,7 +15824,9 @@ comp = rr({
   componentDidMount: function() {
     keypress_ee.on('new_keypress_enter', (function(_this) {
       return function() {
-        return send_edited_message.bind(_this)();
+        if (_this.state.editing === true) {
+          return send_edited_message.bind(_this)();
+        }
       };
     })(this));
     return keypress_ee.on('new_keypress_escape', (function(_this) {

@@ -81,7 +81,8 @@ comp = rr
 
     componentDidMount: ->
         keypress_ee.on 'new_keypress_enter', =>
-            send_edited_message.bind(@)()
+            if @state.editing is true
+                send_edited_message.bind(@)()
 
         keypress_ee.on 'new_keypress_escape', =>
             if @state.editing is true
