@@ -20,6 +20,7 @@ root_component = rr
 
 set_and_render = ->
     { width, height } = root_el.getBoundingClientRect()
+
     React_DOM.render root_component({ ww: width, wh: height }), root_el
 
 window.onload = ->

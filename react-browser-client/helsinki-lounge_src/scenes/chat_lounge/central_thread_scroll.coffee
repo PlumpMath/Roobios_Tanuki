@@ -12,17 +12,12 @@ chat_log = ->
     c 'wh here', wh
     div
         style:
-            overflowY: 'scroll'
+            overflowY: 'auto'
             overflowX: 'hidden'
             maxHeight: .8 * wh
             backgroundColor: 'ivory'
-            # display: 'flex'
             flexGrow: 8
             width: '100%'
-            flexDirection: 'column'
-            # alignItems: 'flex-start'
-            # justifyContent: 'flex-start'
-
         if @props.chat_log.length > 0
             for item, idx in @props.chat_log
                 message_card.bind(@) { item, idx }

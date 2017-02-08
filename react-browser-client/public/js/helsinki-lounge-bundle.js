@@ -15779,8 +15779,11 @@ render = function() {
   }, this.props.hive[item.safe_id].username + ': '), this.state.editing === false ? span({
     style: {
       width: 400,
+      padding: 4,
       height: 16,
-      fontSize: 10
+      fontSize: 10,
+      color: 'darkslategrey',
+      fontFamily: 'sans'
     }
   }, item.input_field) : input({
     ref: (function(_this) {
@@ -48912,13 +48915,12 @@ chat_log = function() {
   c('wh here', wh);
   return div({
     style: {
-      overflowY: 'scroll',
+      overflowY: 'auto',
       overflowX: 'hidden',
       maxHeight: .8 * wh,
       backgroundColor: 'ivory',
       flexGrow: 8,
-      width: '100%',
-      flexDirection: 'column'
+      width: '100%'
     }
   }, (function() {
     var i, len, ref1, results;

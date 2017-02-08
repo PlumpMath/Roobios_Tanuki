@@ -41,10 +41,11 @@ render = ->
             span
                 style:
                     width: 400
-                    # paddingLeft: 1
+                    padding: 4
                     height: 16
-                    # marginLeft: 40
                     fontSize: 10
+                    color: 'darkslategrey'
+                    fontFamily: 'sans'
                 item.input_field
         else
             input
