@@ -93,6 +93,6 @@ dev_server = ({ env, cs, redis }) ->
         redis: redis
 
     app_helsinki_lounge_server.listen app_helsinki_lounge_port, ->
-        c color.blue('listening on ', app_helsinki_lounge_port, on)
+        c color.blue("Server listening on port" , on), color.cyan(app_helsinki_lounge_port, on)
 
 require('../concordance/helsinki-lounge/modules/startup_transce.coffee') { dev_server }
