@@ -18,7 +18,6 @@ render = ->
     div
         key: "messg:#{idx}"
         style:
-
             display: 'flex'
             alignItems: 'flex-start'
             justifyContent: 'flex-start'
@@ -49,6 +48,9 @@ render = ->
                 item.input_field
         else
             input
+                ref: (input) =>
+                    # c 'hello', input
+                    @text_input = input
                 style:
                     fontSize: 10
                     color: 'grey'
@@ -66,6 +68,10 @@ render = ->
                     if @state.editing is false
                         @setState
                             editing: true
+                        setTimeout =>
+                            @text_input.focus()
+                        , 100
+
                     else if @state.editing is true
                         send_edited_message.bind(@)()
                 style:

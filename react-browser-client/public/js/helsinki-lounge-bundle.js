@@ -15783,6 +15783,11 @@ render = function() {
       fontSize: 10
     }
   }, item.input_field) : input({
+    ref: (function(_this) {
+      return function(input) {
+        return _this.text_input = input;
+      };
+    })(this),
     style: {
       fontSize: 10,
       color: 'grey',
@@ -15802,9 +15807,12 @@ render = function() {
     onClick: (function(_this) {
       return function() {
         if (_this.state.editing === false) {
-          return _this.setState({
+          _this.setState({
             editing: true
           });
+          return setTimeout(function() {
+            return _this.text_input.focus();
+          }, 100);
         } else if (_this.state.editing === true) {
           return send_edited_message.bind(_this)();
         }
