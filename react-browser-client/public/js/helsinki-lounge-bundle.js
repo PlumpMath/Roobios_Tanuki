@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 250);
+/******/ 	return __webpack_require__(__webpack_require__.s = 251);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -15642,6 +15642,8 @@ window.connect = __webpack_require__(86).connect;
 
 window.Imm = __webpack_require__(35);
 
+window.EE = __webpack_require__(250);
+
 window.primus = new Primus('http://localhost:6494', {});
 
 window.debounce = function(fn, wait, immediate) {
@@ -15704,7 +15706,7 @@ window.reduce = _.reduce;
 
 var chat_lounge, comp, map_dispatch_to_props, map_state_to_props, render;
 
-chat_lounge = rc(__webpack_require__(101)["default"]);
+chat_lounge = rc(__webpack_require__(252)["default"]);
 
 render = function() {
   var ref, wh, ww;
@@ -15731,329 +15733,23 @@ exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
 
 
 /***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var central_book_and_input, change_input_field, change_username_input_field, chat_log, comp, map_dispatch_to_props, map_state_to_props, message_card, render, sidebar_hive, the_whole;
-
-change_input_field = function(arg) {
-  var val;
-  val = arg.val;
-  return this.setState({
-    input_field: val
-  });
-};
-
-change_username_input_field = function(arg) {
-  var val;
-  val = arg.val;
-  return this.setState({
-    username_input_field: val
-  });
-};
-
-sidebar_hive = function() {
-  var key, sesh;
-  return div({
-    style: {
-      backgroundColor: 'lightcyan',
-      display: 'flex',
-      flexGrow: 1,
-      flexDirection: 'column'
-    }
-  }, div({
-    style: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'lavender',
-      width: '100%',
-      height: '20%'
-    }
-  }, p({
-    style: {
-      fontSize: 10,
-      color: 'maroon'
-    }
-  }, "Your name: " + this.props.username), input({
-    style: {
-      fontSize: 12,
-      color: 'darkgrey',
-      padding: 8
-    },
-    type: 'text',
-    placeholder: "set username",
-    value: this.state.username_input_field,
-    onFocus: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          username_input_focus: true
-        });
-      };
-    })(this),
-    onBlur: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          username_input_focus: false
-        });
-      };
-    })(this),
-    onChange: (function(_this) {
-      return function(e) {
-        return change_username_input_field.bind(_this)({
-          val: e.target.value
-        });
-      };
-    })(this)
-  })), div({
-    style: {
-      backgroundColor: 'lemonchiffon',
-      width: '100%',
-      height: '80%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start'
-    }
-  }, p({
-    style: {
-      fontSize: 10,
-      color: 'maroon'
-    }
-  }, "People in the lounge:"), (function() {
-    var ref, results;
-    if (this.props.hive) {
-      ref = this.props.hive;
-      results = [];
-      for (key in ref) {
-        sesh = ref[key];
-        results.push(p({
-          style: {
-            fontSize: 10,
-            color: 'lightblue'
-          }
-        }, sesh.username));
-      }
-      return results;
-    } else {
-      return c(this.props.hive);
-    }
-  }).call(this)));
-};
-
-message_card = rc(__webpack_require__(102)["default"]);
-
-chat_log = function() {
-  var idx, item;
-  return div({
-    style: {
-      backgroundColor: 'ivory',
-      display: 'flex',
-      flexGrow: 8,
-      width: '100%',
-      flexDirection: 'column',
-      alignItems: 'flex-start',
-      justifyContent: 'flex-start'
-    }
-  }, (function() {
-    var i, len, ref, results;
-    if (this.props.chat_log.length > 0) {
-      ref = this.props.chat_log;
-      results = [];
-      for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
-        item = ref[idx];
-        results.push(message_card.bind(this)({
-          item: item,
-          idx: idx
-        }));
-      }
-      return results;
-    }
-  }).call(this));
-};
-
-central_book_and_input = function() {
-  return div({
-    style: {
-      backgroundColor: 'aliceblue',
-      display: 'flex',
-      flexDirection: 'column',
-      flexGrow: 4
-    }
-  }, chat_log.bind(this)(), div({
-    style: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexGrow: 2
-    }
-  }, input({
-    style: {
-      width: '400px',
-      height: 20,
-      fontSize: 16,
-      color: 'grey',
-      padding: '8px'
-    },
-    value: this.state.input_field,
-    type: 'text',
-    placeholder: 'chat here',
-    onFocus: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          input_focus: true
-        });
-      };
-    })(this),
-    onBlur: (function(_this) {
-      return function(e) {
-        return _this.setState({
-          input_focus: false
-        });
-      };
-    })(this),
-    onChange: (function(_this) {
-      return function(e) {
-        return change_input_field.bind(_this)({
-          val: e.target.value
-        });
-      };
-    })(this)
-  })));
-};
-
-the_whole = function() {
-  var ref, wh, ww;
-  ref = this.props, ww = ref.ww, wh = ref.wh;
-  return div({
-    style: {
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      backgroundColor: 'snow'
-    }
-  }, div({
-    style: {
-      flexGrow: 1,
-      maxHeight: 50,
-      flexShrink: 4
-    }
-  }, h2({
-    style: {
-      height: 60,
-      color: 'grey',
-      fontFamily: 'sans'
-    }
-  }, "The Chat")), div({
-    style: {
-      display: 'flex',
-      flexGrow: 23,
-      width: '100%',
-      backgroundColor: 'aliceblue'
-    }
-  }, sidebar_hive.bind(this)(), central_book_and_input.bind(this)()));
-};
-
-render = function() {
-  var ref, wh, ww;
-  c(this.state);
-  c(this.props);
-  ref = this.props, ww = ref.ww, wh = ref.wh;
-  return the_whole.bind(this)();
-};
-
-comp = rr({
-  componentDidMount: function() {
-    return document.onkeydown = (function(_this) {
-      return function(e) {
-        var keycode;
-        keycode = e.keycode || e.which;
-        if (keycode === 13) {
-          if (_this.state.input_focus === true) {
-            c('input focus');
-            _this.props.send_message({
-              payload: {
-                input_field: _this.state.input_field
-              }
-            });
-            return _this.setState({
-              input_field: ''
-            });
-          } else if (_this.state.username_input_focus === true) {
-            c('username_input_focus');
-            _this.props.change_username({
-              payload: {
-                username_input_field: _this.state.username_input_field
-              }
-            });
-            return _this.setState({
-              username_input_field: ''
-            });
-          } else {
-            return c('there');
-          }
-        }
-      };
-    })(this);
-  },
-  getInitialState: function() {
-    return {
-      input_focus: false,
-      username_input_focus: false,
-      input_field: '',
-      username_input_field: '',
-      username: this.props.username
-    };
-  },
-  render: render
-});
-
-map_state_to_props = function(state) {
-  return state.get('lounger').toJS();
-};
-
-map_dispatch_to_props = function(dispatch) {
-  return {
-    change_username: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'change_username',
-        payload: payload
-      });
-    },
-    send_message: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'send_message',
-        payload: payload
-      });
-    },
-    request_orient: function(arg) {
-      var payload;
-      payload = arg.payload;
-      return dispatch({
-        type: 'request_orient',
-        payload: payload
-      });
-    }
-  };
-};
-
-exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
-
-
-/***/ }),
+/* 101 */,
 /* 102 */
 /***/ (function(module, exports) {
 
-var comp, map_dispatch_to_props, map_state_to_props, render;
+var comp, map_dispatch_to_props, map_state_to_props, render, send_edited_message;
+
+send_edited_message = function() {
+  var item;
+  item = this.props.item;
+  this.setState({
+    editing: false
+  });
+  return this.props.send_edited_message({
+    item: item,
+    input_value: this.state.input_value
+  });
+};
 
 render = function() {
   var idx, item, nowish, ref;
@@ -16110,13 +15806,7 @@ render = function() {
             editing: true
           });
         } else if (_this.state.editing === true) {
-          _this.setState({
-            editing: false
-          });
-          return _this.props.send_edited_message({
-            item: item,
-            input_value: _this.state.input_value
-          });
+          return send_edited_message.bind(_this)();
         }
       };
     })(this),
@@ -16131,6 +15821,22 @@ render = function() {
 };
 
 comp = rr({
+  componentDidMount: function() {
+    keypress_ee.on('new_keypress_enter', (function(_this) {
+      return function() {
+        return send_edited_message.bind(_this)();
+      };
+    })(this));
+    return keypress_ee.on('new_keypress_escape', (function(_this) {
+      return function() {
+        if (_this.state.editing === true) {
+          return _this.setState({
+            editing: false
+          });
+        }
+      };
+    })(this));
+  },
   getInitialState: function() {
     return {
       editing: false,
@@ -16167,7 +15873,7 @@ exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var applyMiddleware, combineReducers, compose, createStore, imm_initial_state, initial_state, lounger, middleware, mocks, reducers, ref, set, side_effect_trigger_f, side_effects, store, thunk;
+var applyMiddleware, combineReducers, compose, createStore, imm_initial_state, initial_state, lounger, middleware, reducers, ref, set, side_effect_trigger_f, side_effects, store, thunk;
 
 ref = __webpack_require__(96), applyMiddleware = ref.applyMiddleware, compose = ref.compose, createStore = ref.createStore;
 
@@ -16177,14 +15883,9 @@ thunk = __webpack_require__(235)["default"];
 
 middleware = thunk;
 
-mocks = function(state, action) {
-  return state;
-};
-
 lounger = __webpack_require__(105)["default"];
 
 reducers = {
-  mocks: mocks,
   lounger: lounger
 };
 
@@ -16229,11 +15930,6 @@ module.exports = store;
 /***/ (function(module, exports) {
 
 exports["default"] = {
-  mocks: {
-    red: 'orange',
-    green: 'purple',
-    blue: 'yellow'
-  },
   lounger: {
     chat_log: Imm.List([]),
     username: 'placholder username',
@@ -16359,7 +16055,7 @@ arq['new_message'] = function(arg) {
   state = arg.state, action = arg.action, data = arg.data;
   c('is in new message', data);
   chat_log = state.get('chat_log');
-  c('chat_log', chat_log.toJS());
+  c('chat_log', chat_log);
   chat_log = chat_log.push(data.payload);
   return state.set('chat_log', chat_log);
 };
@@ -48549,7 +48245,825 @@ function symbolObservablePonyfill(root) {
 /* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * EventEmitter v5.1.0 - git.io/ee
+ * Unlicense - http://unlicense.org/
+ * Oliver Caldwell - http://oli.me.uk/
+ * @preserve
+ */
+
+;(function (exports) {
+    'use strict';
+
+    /**
+     * Class for managing events.
+     * Can be extended to provide event functionality in other classes.
+     *
+     * @class EventEmitter Manages event registering and emitting.
+     */
+    function EventEmitter() {}
+
+    // Shortcuts to improve speed and size
+    var proto = EventEmitter.prototype;
+    var originalGlobalValue = exports.EventEmitter;
+
+    /**
+     * Finds the index of the listener for the event in its storage array.
+     *
+     * @param {Function[]} listeners Array of listeners to search through.
+     * @param {Function} listener Method to look for.
+     * @return {Number} Index of the specified listener, -1 if not found
+     * @api private
+     */
+    function indexOfListener(listeners, listener) {
+        var i = listeners.length;
+        while (i--) {
+            if (listeners[i].listener === listener) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    /**
+     * Alias a method while keeping the context correct, to allow for overwriting of target method.
+     *
+     * @param {String} name The name of the target method.
+     * @return {Function} The aliased method
+     * @api private
+     */
+    function alias(name) {
+        return function aliasClosure() {
+            return this[name].apply(this, arguments);
+        };
+    }
+
+    /**
+     * Returns the listener array for the specified event.
+     * Will initialise the event object and listener arrays if required.
+     * Will return an object if you use a regex search. The object contains keys for each matched event. So /ba[rz]/ might return an object containing bar and baz. But only if you have either defined them with defineEvent or added some listeners to them.
+     * Each property in the object response is an array of listener functions.
+     *
+     * @param {String|RegExp} evt Name of the event to return the listeners from.
+     * @return {Function[]|Object} All listener functions for the event.
+     */
+    proto.getListeners = function getListeners(evt) {
+        var events = this._getEvents();
+        var response;
+        var key;
+
+        // Return a concatenated array of all matching events if
+        // the selector is a regular expression.
+        if (evt instanceof RegExp) {
+            response = {};
+            for (key in events) {
+                if (events.hasOwnProperty(key) && evt.test(key)) {
+                    response[key] = events[key];
+                }
+            }
+        }
+        else {
+            response = events[evt] || (events[evt] = []);
+        }
+
+        return response;
+    };
+
+    /**
+     * Takes a list of listener objects and flattens it into a list of listener functions.
+     *
+     * @param {Object[]} listeners Raw listener objects.
+     * @return {Function[]} Just the listener functions.
+     */
+    proto.flattenListeners = function flattenListeners(listeners) {
+        var flatListeners = [];
+        var i;
+
+        for (i = 0; i < listeners.length; i += 1) {
+            flatListeners.push(listeners[i].listener);
+        }
+
+        return flatListeners;
+    };
+
+    /**
+     * Fetches the requested listeners via getListeners but will always return the results inside an object. This is mainly for internal use but others may find it useful.
+     *
+     * @param {String|RegExp} evt Name of the event to return the listeners from.
+     * @return {Object} All listener functions for an event in an object.
+     */
+    proto.getListenersAsObject = function getListenersAsObject(evt) {
+        var listeners = this.getListeners(evt);
+        var response;
+
+        if (listeners instanceof Array) {
+            response = {};
+            response[evt] = listeners;
+        }
+
+        return response || listeners;
+    };
+
+    function isValidListener (listener) {
+        if (typeof listener === 'function' || listener instanceof RegExp) {
+            return true
+        } else if (listener && typeof listener === 'object') {
+            return isValidListener(listener.listener)
+        } else {
+            return false
+        }
+    }
+
+    /**
+     * Adds a listener function to the specified event.
+     * The listener will not be added if it is a duplicate.
+     * If the listener returns true then it will be removed after it is called.
+     * If you pass a regular expression as the event name then the listener will be added to all events that match it.
+     *
+     * @param {String|RegExp} evt Name of the event to attach the listener to.
+     * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.addListener = function addListener(evt, listener) {
+        if (!isValidListener(listener)) {
+            throw new TypeError('listener must be a function');
+        }
+
+        var listeners = this.getListenersAsObject(evt);
+        var listenerIsWrapped = typeof listener === 'object';
+        var key;
+
+        for (key in listeners) {
+            if (listeners.hasOwnProperty(key) && indexOfListener(listeners[key], listener) === -1) {
+                listeners[key].push(listenerIsWrapped ? listener : {
+                    listener: listener,
+                    once: false
+                });
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Alias of addListener
+     */
+    proto.on = alias('addListener');
+
+    /**
+     * Semi-alias of addListener. It will add a listener that will be
+     * automatically removed after its first execution.
+     *
+     * @param {String|RegExp} evt Name of the event to attach the listener to.
+     * @param {Function} listener Method to be called when the event is emitted. If the function returns true then it will be removed after calling.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.addOnceListener = function addOnceListener(evt, listener) {
+        return this.addListener(evt, {
+            listener: listener,
+            once: true
+        });
+    };
+
+    /**
+     * Alias of addOnceListener.
+     */
+    proto.once = alias('addOnceListener');
+
+    /**
+     * Defines an event name. This is required if you want to use a regex to add a listener to multiple events at once. If you don't do this then how do you expect it to know what event to add to? Should it just add to every possible match for a regex? No. That is scary and bad.
+     * You need to tell it what event names should be matched by a regex.
+     *
+     * @param {String} evt Name of the event to create.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.defineEvent = function defineEvent(evt) {
+        this.getListeners(evt);
+        return this;
+    };
+
+    /**
+     * Uses defineEvent to define multiple events.
+     *
+     * @param {String[]} evts An array of event names to define.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.defineEvents = function defineEvents(evts) {
+        for (var i = 0; i < evts.length; i += 1) {
+            this.defineEvent(evts[i]);
+        }
+        return this;
+    };
+
+    /**
+     * Removes a listener function from the specified event.
+     * When passed a regular expression as the event name, it will remove the listener from all events that match it.
+     *
+     * @param {String|RegExp} evt Name of the event to remove the listener from.
+     * @param {Function} listener Method to remove from the event.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.removeListener = function removeListener(evt, listener) {
+        var listeners = this.getListenersAsObject(evt);
+        var index;
+        var key;
+
+        for (key in listeners) {
+            if (listeners.hasOwnProperty(key)) {
+                index = indexOfListener(listeners[key], listener);
+
+                if (index !== -1) {
+                    listeners[key].splice(index, 1);
+                }
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Alias of removeListener
+     */
+    proto.off = alias('removeListener');
+
+    /**
+     * Adds listeners in bulk using the manipulateListeners method.
+     * If you pass an object as the second argument you can add to multiple events at once. The object should contain key value pairs of events and listeners or listener arrays. You can also pass it an event name and an array of listeners to be added.
+     * You can also pass it a regular expression to add the array of listeners to all events that match it.
+     * Yeah, this function does quite a bit. That's probably a bad thing.
+     *
+     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add to multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to add.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.addListeners = function addListeners(evt, listeners) {
+        // Pass through to manipulateListeners
+        return this.manipulateListeners(false, evt, listeners);
+    };
+
+    /**
+     * Removes listeners in bulk using the manipulateListeners method.
+     * If you pass an object as the second argument you can remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
+     * You can also pass it an event name and an array of listeners to be removed.
+     * You can also pass it a regular expression to remove the listeners from all events that match it.
+     *
+     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to remove from multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to remove.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.removeListeners = function removeListeners(evt, listeners) {
+        // Pass through to manipulateListeners
+        return this.manipulateListeners(true, evt, listeners);
+    };
+
+    /**
+     * Edits listeners in bulk. The addListeners and removeListeners methods both use this to do their job. You should really use those instead, this is a little lower level.
+     * The first argument will determine if the listeners are removed (true) or added (false).
+     * If you pass an object as the second argument you can add/remove from multiple events at once. The object should contain key value pairs of events and listeners or listener arrays.
+     * You can also pass it an event name and an array of listeners to be added/removed.
+     * You can also pass it a regular expression to manipulate the listeners of all events that match it.
+     *
+     * @param {Boolean} remove True if you want to remove listeners, false if you want to add.
+     * @param {String|Object|RegExp} evt An event name if you will pass an array of listeners next. An object if you wish to add/remove from multiple events at once.
+     * @param {Function[]} [listeners] An optional array of listener functions to add/remove.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.manipulateListeners = function manipulateListeners(remove, evt, listeners) {
+        var i;
+        var value;
+        var single = remove ? this.removeListener : this.addListener;
+        var multiple = remove ? this.removeListeners : this.addListeners;
+
+        // If evt is an object then pass each of its properties to this method
+        if (typeof evt === 'object' && !(evt instanceof RegExp)) {
+            for (i in evt) {
+                if (evt.hasOwnProperty(i) && (value = evt[i])) {
+                    // Pass the single listener straight through to the singular method
+                    if (typeof value === 'function') {
+                        single.call(this, i, value);
+                    }
+                    else {
+                        // Otherwise pass back to the multiple function
+                        multiple.call(this, i, value);
+                    }
+                }
+            }
+        }
+        else {
+            // So evt must be a string
+            // And listeners must be an array of listeners
+            // Loop over it and pass each one to the multiple method
+            i = listeners.length;
+            while (i--) {
+                single.call(this, evt, listeners[i]);
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Removes all listeners from a specified event.
+     * If you do not specify an event then all listeners will be removed.
+     * That means every event will be emptied.
+     * You can also pass a regex to remove all events that match it.
+     *
+     * @param {String|RegExp} [evt] Optional name of the event to remove all listeners for. Will remove from every event if not passed.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.removeEvent = function removeEvent(evt) {
+        var type = typeof evt;
+        var events = this._getEvents();
+        var key;
+
+        // Remove different things depending on the state of evt
+        if (type === 'string') {
+            // Remove all listeners for the specified event
+            delete events[evt];
+        }
+        else if (evt instanceof RegExp) {
+            // Remove all events matching the regex.
+            for (key in events) {
+                if (events.hasOwnProperty(key) && evt.test(key)) {
+                    delete events[key];
+                }
+            }
+        }
+        else {
+            // Remove all listeners in all events
+            delete this._events;
+        }
+
+        return this;
+    };
+
+    /**
+     * Alias of removeEvent.
+     *
+     * Added to mirror the node API.
+     */
+    proto.removeAllListeners = alias('removeEvent');
+
+    /**
+     * Emits an event of your choice.
+     * When emitted, every listener attached to that event will be executed.
+     * If you pass the optional argument array then those arguments will be passed to every listener upon execution.
+     * Because it uses `apply`, your array of arguments will be passed as if you wrote them out separately.
+     * So they will not arrive within the array on the other side, they will be separate.
+     * You can also pass a regular expression to emit to all events that match it.
+     *
+     * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
+     * @param {Array} [args] Optional array of arguments to be passed to each listener.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.emitEvent = function emitEvent(evt, args) {
+        var listenersMap = this.getListenersAsObject(evt);
+        var listeners;
+        var listener;
+        var i;
+        var key;
+        var response;
+
+        for (key in listenersMap) {
+            if (listenersMap.hasOwnProperty(key)) {
+                listeners = listenersMap[key].slice(0);
+
+                for (i = 0; i < listeners.length; i++) {
+                    // If the listener returns true then it shall be removed from the event
+                    // The function is executed either with a basic call or an apply if there is an args array
+                    listener = listeners[i];
+
+                    if (listener.once === true) {
+                        this.removeListener(evt, listener.listener);
+                    }
+
+                    response = listener.listener.apply(this, args || []);
+
+                    if (response === this._getOnceReturnValue()) {
+                        this.removeListener(evt, listener.listener);
+                    }
+                }
+            }
+        }
+
+        return this;
+    };
+
+    /**
+     * Alias of emitEvent
+     */
+    proto.trigger = alias('emitEvent');
+
+    /**
+     * Subtly different from emitEvent in that it will pass its arguments on to the listeners, as opposed to taking a single array of arguments to pass on.
+     * As with emitEvent, you can pass a regex in place of the event name to emit to all events that match it.
+     *
+     * @param {String|RegExp} evt Name of the event to emit and execute listeners for.
+     * @param {...*} Optional additional arguments to be passed to each listener.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.emit = function emit(evt) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        return this.emitEvent(evt, args);
+    };
+
+    /**
+     * Sets the current value to check against when executing listeners. If a
+     * listeners return value matches the one set here then it will be removed
+     * after execution. This value defaults to true.
+     *
+     * @param {*} value The new value to check for when executing listeners.
+     * @return {Object} Current instance of EventEmitter for chaining.
+     */
+    proto.setOnceReturnValue = function setOnceReturnValue(value) {
+        this._onceReturnValue = value;
+        return this;
+    };
+
+    /**
+     * Fetches the current value to check against when executing listeners. If
+     * the listeners return value matches this one then it should be removed
+     * automatically. It will return true by default.
+     *
+     * @return {*|Boolean} The current value to check for or the default, true.
+     * @api private
+     */
+    proto._getOnceReturnValue = function _getOnceReturnValue() {
+        if (this.hasOwnProperty('_onceReturnValue')) {
+            return this._onceReturnValue;
+        }
+        else {
+            return true;
+        }
+    };
+
+    /**
+     * Fetches the events object and creates one if required.
+     *
+     * @return {Object} The events storage object.
+     * @api private
+     */
+    proto._getEvents = function _getEvents() {
+        return this._events || (this._events = {});
+    };
+
+    /**
+     * Reverts the global {@link EventEmitter} to its previous value and returns a reference to this version.
+     *
+     * @return {Function} Non conflicting EventEmitter class.
+     */
+    EventEmitter.noConflict = function noConflict() {
+        exports.EventEmitter = originalGlobalValue;
+        return EventEmitter;
+    };
+
+    // Expose the class either via AMD, CommonJS or the global object
+    if (true) {
+        !(__WEBPACK_AMD_DEFINE_RESULT__ = function () {
+            return EventEmitter;
+        }.call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+    }
+    else if (typeof module === 'object' && module.exports){
+        module.exports = EventEmitter;
+    }
+    else {
+        exports.EventEmitter = EventEmitter;
+    }
+}(this || {}));
+
+
+/***/ }),
+/* 251 */
+/***/ (function(module, exports, __webpack_require__) {
+
 module.exports = __webpack_require__(98);
+
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var central_book_and_input, change_input_field, change_username_input_field, chat_log, comp, map_dispatch_to_props, map_state_to_props, message_card, render, sidebar_hive, the_whole;
+
+change_input_field = function(arg) {
+  var val;
+  val = arg.val;
+  return this.setState({
+    input_field: val
+  });
+};
+
+change_username_input_field = function(arg) {
+  var val;
+  val = arg.val;
+  return this.setState({
+    username_input_field: val
+  });
+};
+
+sidebar_hive = function() {
+  var key, sesh;
+  return div({
+    style: {
+      backgroundColor: 'lightcyan',
+      display: 'flex',
+      flexGrow: 1,
+      flexDirection: 'column'
+    }
+  }, div({
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'lavender',
+      width: '100%',
+      height: '20%'
+    }
+  }, p({
+    style: {
+      fontSize: 10,
+      color: 'maroon'
+    }
+  }, "Your name: " + this.props.username), input({
+    style: {
+      fontSize: 12,
+      color: 'darkgrey',
+      padding: 8
+    },
+    type: 'text',
+    placeholder: "set username",
+    value: this.state.username_input_field,
+    onFocus: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          username_input_focus: true
+        });
+      };
+    })(this),
+    onBlur: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          username_input_focus: false
+        });
+      };
+    })(this),
+    onChange: (function(_this) {
+      return function(e) {
+        return change_username_input_field.bind(_this)({
+          val: e.target.value
+        });
+      };
+    })(this)
+  })), div({
+    style: {
+      backgroundColor: 'lemonchiffon',
+      width: '100%',
+      height: '80%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start'
+    }
+  }, p({
+    style: {
+      fontSize: 10,
+      color: 'maroon'
+    }
+  }, "People in the lounge:"), (function() {
+    var ref, results;
+    if (this.props.hive) {
+      ref = this.props.hive;
+      results = [];
+      for (key in ref) {
+        sesh = ref[key];
+        results.push(p({
+          style: {
+            fontSize: 10,
+            color: 'lightblue'
+          }
+        }, sesh.username));
+      }
+      return results;
+    } else {
+      return c(this.props.hive);
+    }
+  }).call(this)));
+};
+
+message_card = rc(__webpack_require__(102)["default"]);
+
+chat_log = function() {
+  var idx, item;
+  return div({
+    style: {
+      backgroundColor: 'ivory',
+      display: 'flex',
+      flexGrow: 8,
+      width: '100%',
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'flex-start'
+    }
+  }, (function() {
+    var i, len, ref, results;
+    if (this.props.chat_log.length > 0) {
+      ref = this.props.chat_log;
+      results = [];
+      for (idx = i = 0, len = ref.length; i < len; idx = ++i) {
+        item = ref[idx];
+        results.push(message_card.bind(this)({
+          item: item,
+          idx: idx
+        }));
+      }
+      return results;
+    }
+  }).call(this));
+};
+
+central_book_and_input = function() {
+  return div({
+    style: {
+      backgroundColor: 'aliceblue',
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 4
+    }
+  }, chat_log.bind(this)(), div({
+    style: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexGrow: 2
+    }
+  }, input({
+    style: {
+      width: '400px',
+      height: 20,
+      fontSize: 16,
+      color: 'grey',
+      padding: '8px'
+    },
+    value: this.state.input_field,
+    type: 'text',
+    placeholder: 'chat here',
+    onFocus: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_focus: true
+        });
+      };
+    })(this),
+    onBlur: (function(_this) {
+      return function(e) {
+        return _this.setState({
+          input_focus: false
+        });
+      };
+    })(this),
+    onChange: (function(_this) {
+      return function(e) {
+        return change_input_field.bind(_this)({
+          val: e.target.value
+        });
+      };
+    })(this)
+  })));
+};
+
+the_whole = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return div({
+    style: {
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      backgroundColor: 'snow'
+    }
+  }, div({
+    style: {
+      flexGrow: 1,
+      maxHeight: 50,
+      flexShrink: 4
+    }
+  }, h2({
+    style: {
+      height: 60,
+      color: 'grey',
+      fontFamily: 'sans'
+    }
+  }, "The Chat")), div({
+    style: {
+      display: 'flex',
+      flexGrow: 23,
+      width: '100%',
+      backgroundColor: 'aliceblue'
+    }
+  }, sidebar_hive.bind(this)(), central_book_and_input.bind(this)()));
+};
+
+render = function() {
+  var ref, wh, ww;
+  ref = this.props, ww = ref.ww, wh = ref.wh;
+  return the_whole.bind(this)();
+};
+
+comp = rr({
+  componentDidMount: function() {
+    window.keypress_ee = new EE();
+    document.onkeydown = (function(_this) {
+      return function(e) {
+        var keycode;
+        keycode = e.keycode || e.which;
+        if (keycode === 13) {
+          c('enter keypress');
+          return keypress_ee.emit('new_keypress_enter');
+        } else if (keycode === 27) {
+          c('escape keypress');
+          return keypress_ee.emit('new_keypress_escape');
+        }
+      };
+    })(this);
+    return keypress_ee.on('new_keypress_enter', (function(_this) {
+      return function() {
+        if (_this.state.input_focus === true) {
+          _this.props.send_message({
+            payload: {
+              input_field: _this.state.input_field
+            }
+          });
+          return _this.setState({
+            input_field: ''
+          });
+        } else if (_this.state.username_input_focus === true) {
+          _this.props.change_username({
+            payload: {
+              username_input_field: _this.state.username_input_field
+            }
+          });
+          return _this.setState({
+            username_input_field: ''
+          });
+        } else {
+          return c('there');
+        }
+      };
+    })(this));
+  },
+  getInitialState: function() {
+    return {
+      input_focus: false,
+      username_input_focus: false,
+      input_field: '',
+      username_input_field: '',
+      username: this.props.username
+    };
+  },
+  render: render
+});
+
+map_state_to_props = function(state) {
+  return state.get('lounger').toJS();
+};
+
+map_dispatch_to_props = function(dispatch) {
+  return {
+    change_username: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'change_username',
+        payload: payload
+      });
+    },
+    send_message: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'send_message',
+        payload: payload
+      });
+    },
+    request_orient: function(arg) {
+      var payload;
+      payload = arg.payload;
+      return dispatch({
+        type: 'request_orient',
+        payload: payload
+      });
+    }
+  };
+};
+
+exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
 
 
 /***/ })

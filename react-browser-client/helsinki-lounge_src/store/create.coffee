@@ -5,13 +5,11 @@
 thunk = require('redux-thunk').default
 middleware = thunk
 
-mocks = (state, action) ->
-    # c 'mocks action', action
-    state
+
 
 lounger = require('./reducers/lounger.coffee').default
 
-reducers = { mocks, lounger }
+reducers = { lounger }
 
 initial_state = require('./modules/initial_state.coffee').default
 

@@ -1,7 +1,9 @@
 
 
 
-chat_lounge = rc require('../../scenes/chat_lounge.coffee').default
+# chat_lounge = rc require('../../scenes/chat_lounge.coffee').default
+chat_lounge = rc require('../../scenes/chat_lounge_308.coffee').default
+
 
 
 

@@ -10,6 +10,7 @@ window.shortid = require 'shortid'
 window.key_mirror = require 'keymirror'
 { connect: window.connect } = require 'react-redux'
 window.Imm = require 'immutable'
+window.EE = require "wolfy87-eventemitter"
 
 window.primus = new Primus('http://localhost:6494', {})
 

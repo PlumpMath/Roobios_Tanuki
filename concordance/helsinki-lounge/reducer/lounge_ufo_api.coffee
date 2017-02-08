@@ -6,44 +6,23 @@ arq = {}
 
 
 arq['send_edited_message'] = ({ state, action }) ->
-    c '\n \n action.payload.data', action.payload.data.payload
     { token } = action.payload
     sesh = state.getIn ['lounger_sessions', token]
-    c 'sesh', sesh
-    c 'action.payload.data.payload', action.payload.data.payload
     { input_value, item } = action.payload.data.payload
-    c 'item', item
-    # c 'input_field', input_field
-
-
-
-
-    # c 'our_element', our_element
-    if item.safe_id is sesh.safe_id
-        c 'doing'
-
+    # if item.safe_id is sesh.safe_id
+        # c 'doing'
+    # TODO: improve safety & security for this process
     chat_log = state.get 'chat_log'
-    x = chat_log.findEntry (msg, idx) ->
-        c 'looking in chat_log with item, idx', msg, idx
+    the_entry = chat_log.findEntry (msg, idx) ->
         if msg.message_id is item.message_id
             true
-
-    c 'x', x
-    c x[0]
-    c x[1]
-    our_idx = x[0]
-    our_element = x[1]
-    # [ our_idx, our_elememt ] = x
+    our_idx = the_entry[0]
+    our_element = the_entry[1]
     our_element.input_field = input_value
     our_element.content = input_value
     chat_log = chat_log.update our_idx, (msg_item) ->
-        c 'msg_item', msg_item
-        c 'and el', our_element
         our_element
-
     state = state.set 'chat_log', chat_log
-
-
     state
 
 arq['change_username'] = ({ state, action }) ->
@@ -55,28 +34,17 @@ arq['change_username'] = ({ state, action }) ->
 
 arq['send_message'] = ({ state, action }) ->
     { spark_id, token } = action.payload
-
-    c action.payload.data.payload
-
     sesh = state.getIn(['lounger_sessions', token]).toJS()
-    c 'sesh', sesh
     { session_metadata, safe_id, username } = sesh
     { input_field } = action.payload.data.payload
-    c 'safe_id', safe_id
     arq_900 =
         message_id: v4()
         input_field: input_field
         content: input_field
         timestamp: Date.now()
         safe_id: safe_id
-
     chat_log = state.get('chat_log')
     state  = state.set('chat_log', chat_log.push(arq_900))
-
-
-
-
-
     state.setIn ['desires', shortid()],
         type: 'send_message'
         payload: arq_900

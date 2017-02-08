@@ -2,6 +2,13 @@
 
 
 
+send_edited_message = ->
+    { item } = @props
+    @setState
+        editing: false
+    @props.send_edited_message
+        item: item
+        input_value: @state.input_value
 
 
 
@@ -60,11 +67,7 @@ render = ->
                         @setState
                             editing: true
                     else if @state.editing is true
-                        @setState
-                            editing: false
-                        @props.send_edited_message
-                            item: item
-                            input_value: @state.input_value
+                        send_edited_message.bind(@)()
                 style:
                     width: 40
                     marginLeft: 10
@@ -76,14 +79,16 @@ render = ->
 
 comp = rr
 
-    # componentDidMount: ->
-    #     document.onkeydown = (e) =>
-    #         c 'going'
-    #         keycode = e.keycode or e.which
-    #         if keycode is 13
-    #             if @state.editing is true
-    #                 @setState
-    #                     editing: false
+    componentDidMount: ->
+        keypress_ee.on 'new_keypress_enter', =>
+            send_edited_message.bind(@)()
+
+        keypress_ee.on 'new_keypress_escape', =>
+            if @state.editing is true
+                @setState
+                    editing: false
+
+
 
 
     getInitialState: ->

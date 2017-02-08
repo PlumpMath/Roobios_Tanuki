@@ -36,6 +36,7 @@
         "redux": "latest",
         "redux-immutable": "latest",
         "redux-thunk": "latest",
-        "shortid": "latest"
+        "shortid": "latest",
+        "wolfy87-eventemitter": "latest"
     }
 }
