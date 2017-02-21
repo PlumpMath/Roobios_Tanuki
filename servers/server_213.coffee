@@ -19,7 +19,7 @@ dev_server = ({ env, cs, redis }) ->
         keys, assign, map, reduce
     } = _
 
-    common_public_dir = path.resolve('..', 'react-browser-client', 'public')
+    common_public_dir = path.resolve('..', 'browser-clients', 'public')
 
     helsinki_lounge_arq = do ->
         cookie_parser_secret = "sa4004chpaseutshtm$*(0909(*^))"
@@ -28,7 +28,7 @@ dev_server = ({ env, cs, redis }) ->
         cookie_parser_secret: cookie_parser_secret
         cookies: cookies
         index_path: '/html/helsinki_lounge_index_dev.html'
-        primus_dir: path.resolve('..', 'react-browser-client', 'public', 'js')
+        primus_dir: path.resolve('..', 'browser-clients', 'public', 'js')
 
     # brujo_terminal_arq = do ->
     #     cookie_parser_secret = "49894839avvmbk;"
