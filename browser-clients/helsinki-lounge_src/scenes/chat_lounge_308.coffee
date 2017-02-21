@@ -1,5 +1,18 @@
+
+
 sidebar_hive = require('./chat_lounge/hive_bar.coffee').default
 central_book_and_input = require('./chat_lounge/central_thread_scroll.coffee').default
+
+servers_column =
+    require('./chat_lounge/servers_column.coffee').default
+
+channels_column = require('./chat_lounge/channels_column.coffee').default
+
+right_hive_column = require('./chat_lounge/hive_column.coffee').default
+
+
+
+
 
 styles =
     root:
@@ -66,8 +79,12 @@ the_whole = ->
                 width: '100%'
                 backgroundColor: 'aliceblue'
 
-            sidebar_hive.bind(@)()
+            # sidebar_hive.bind(@)()
+            servers_column.bind(@)()
+            channels_column.bind(@)()
             central_book_and_input.bind(@)()
+
+            right_hive_column.bind(@)()
 
 
 render = ->

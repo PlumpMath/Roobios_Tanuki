@@ -13,14 +13,6 @@ module.exports = config =
         reasons: on
     module:
         loaders: [
-            # {
-            #     test: /\.glsl$/
-            #     loader: 'webpack-glsl'
-            # },
-            # {
-            #     test: /\.styl$/
-            #     loader: 'style-loader!css-loader!stylus-loader'
-            # },
             {
                 test: /\.coffee$/
                 loaders: ['coffee-loader']

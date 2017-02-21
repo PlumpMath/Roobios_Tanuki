@@ -1,4 +1,6 @@
-require './globals_dev.coffee'
+require '../../globals/global_core.coffee'
+
+require '../../globals/styles_one.coffee'
 
 root_el = document.getElementById 'root'
 Provider = rc require('react-redux').Provider
