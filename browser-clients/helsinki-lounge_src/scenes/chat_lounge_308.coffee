@@ -1,35 +1,55 @@
 sidebar_hive = require('./chat_lounge/hive_bar.coffee').default
 central_book_and_input = require('./chat_lounge/central_thread_scroll.coffee').default
 
+styles =
+    root:
+        height: '100%'
+        width: '100%'
+        display: 'flex'
+        flexDirection: 'column'
+        alignItems: 'center'
+        justifyContent: 'flex-start'
+        backgroundColor: 'snow'
+    trunk:
+        display: 'flex'
+        backgroundColor: 'lightblue'
+        width: '100%'
+        flexGrow: 1
+        maxHeight: 50
+        flexShrink: 4
+        justifyContent: 'space-around'
+        alignItems: 'space-between'
+    header:
+        alignSelf: 'flex-start'
+        height: 60
+        color: 'grey'
+        fontFamily: 'sans'
+    chat_noir_cont:
+        display: 'flex'
+        justifyContent: 'space-between'
+        width: '20%'
+        alignItems: 'center'
+
+
+atts = {}
+
 
 the_whole = ->
     { ww, wh } = @props
     div
-        style:
-            height: '100%'
-            width: '100%'
-            display: 'flex'
-            flexDirection: 'column'
-            alignItems: 'center'
-            justifyContent: 'flex-start'
-            backgroundColor: 'snow'
+        style: styles.root
         div
-            style:
-                display: 'flex'
-                backgroundColor: 'lightblue'
-                width: '100%'
-                flexGrow: 1
-                maxHeight: 50
-                flexShrink: 4
-                justifyContent: 'space-around'
-                alignItems: 'space-between'
-            h3
-                style:
-                    alignSelf: 'flex-start'
-                    height: 60
-                    color: 'grey'
-                    fontFamily: 'sans'
-                "Le Chat Noir"
+            style: styles.trunk
+            div
+                style: styles.chat_noir_cont
+
+                img
+                    width: 40
+                    height: 40
+                    src: '/images/le_chat_noir.jpg'
+                h3
+                    style: styles.header
+                    "Le Chat Noir"
             button
                 style:
                     cursor: 'pointer'
@@ -71,7 +91,7 @@ comp = rr
                 @setState
                     username_input_field: ''
             else
-                c 'there'
+                c 'kepress noop in chat_lounge'
 
 
     getInitialState: ->

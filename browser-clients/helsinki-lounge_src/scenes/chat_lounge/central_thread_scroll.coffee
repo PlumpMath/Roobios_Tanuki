@@ -27,6 +27,10 @@ central_book_and_input = ->
             display: 'flex'
             flexDirection: 'column'
             flexGrow: 4
+
+
+
+
         chat_log.bind(@)()
 
         div

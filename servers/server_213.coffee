@@ -56,6 +56,9 @@ dev_server = ({ env, cs, redis }) ->
         store: helsinki_lounge_redis_store
         secret: helsinki_lounge_arq.cookie_parser_secret
 
+    favicon = require('serve-favicon')
+    app_helsinki_lounge.use(favicon(path.join(common_public_dir, '/images','/favicon.ico')));
+
     app_helsinki_lounge.use helsinki_lounge_arq.cookies
     app_helsinki_lounge.use express_session(helsinki_lounge_store_arq)
     app_helsinki_lounge.use '/js', express.static(path.join(common_public_dir, '/js'))

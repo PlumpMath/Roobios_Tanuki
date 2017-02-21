@@ -15620,7 +15620,7 @@ window.onload = function() {
 /* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var a, body, circle, clipPath, code, d, defs, div, dom_stuff, ellipse, feBlend, feGaussianBlur, feMerge, feMergeNode, feOffset, filter, foreignObject, form, g, h1, h2, h3, h4, h5, h6, i, image, input, item, k, len, li, line, linearGradient, ol, p, path, pattern, polygon, polyline, pre, radialGradient, rect, ref, ref1, span, stop, strong, svg, tbody, text, textArea, th, thead, tr, tspan, ul, v;
+var Image, a, body, circle, clipPath, code, d, defs, div, dom_stuff, ellipse, feBlend, feGaussianBlur, feMerge, feMergeNode, feOffset, filter, foreignObject, form, g, h1, h2, h3, h4, h5, h6, i, image, img, input, item, k, len, li, line, linearGradient, ol, p, path, pattern, polygon, polyline, pre, radialGradient, rect, ref, ref1, span, stop, strong, svg, tbody, text, textArea, th, thead, tr, tspan, ul, v;
 
 window.c = console.log.bind(console);
 
@@ -15674,7 +15674,7 @@ window.rc = function() {
   return React.createFactory.apply(React, arguments);
 };
 
-dom_stuff = (ref = React.DOM, p = ref.p, form = ref.form, strong = ref.strong, pre = ref.pre, div = ref.div, h1 = ref.h1, h2 = ref.h2, h3 = ref.h3, h4 = ref.h4, h5 = ref.h5, h6 = ref.h6, span = ref.span, svg = ref.svg, circle = ref.circle, tspan = ref.tspan, rect = ref.rect, ul = ref.ul, line = ref.line, li = ref.li, ol = ref.ol, code = ref.code, a = ref.a, input = ref.input, defs = ref.defs, clipPath = ref.clipPath, body = ref.body, linearGradient = ref.linearGradient, stop = ref.stop, g = ref.g, path = ref.path, d = ref.d, polygon = ref.polygon, image = ref.image, pattern = ref.pattern, filter = ref.filter, feBlend = ref.feBlend, feOffset = ref.feOffset, polyline = ref.polyline, feGaussianBlur = ref.feGaussianBlur, feBlend = ref.feBlend, feMergeNode = ref.feMergeNode, feMerge = ref.feMerge, radialGradient = ref.radialGradient, foreignObject = ref.foreignObject, text = ref.text, textArea = ref.textArea, ellipse = ref.ellipse, pattern = ref.pattern, thead = ref.thead, th = ref.th, tr = ref.tr, tbody = ref.tbody, ref);
+dom_stuff = (ref = React.DOM, p = ref.p, form = ref.form, strong = ref.strong, pre = ref.pre, div = ref.div, h1 = ref.h1, h2 = ref.h2, h3 = ref.h3, h4 = ref.h4, h5 = ref.h5, h6 = ref.h6, span = ref.span, svg = ref.svg, circle = ref.circle, Image = ref.Image, tspan = ref.tspan, rect = ref.rect, ul = ref.ul, line = ref.line, li = ref.li, ol = ref.ol, code = ref.code, a = ref.a, input = ref.input, defs = ref.defs, clipPath = ref.clipPath, body = ref.body, img = ref.img, linearGradient = ref.linearGradient, stop = ref.stop, g = ref.g, path = ref.path, d = ref.d, polygon = ref.polygon, image = ref.image, pattern = ref.pattern, filter = ref.filter, feBlend = ref.feBlend, feOffset = ref.feOffset, polyline = ref.polyline, feGaussianBlur = ref.feGaussianBlur, feBlend = ref.feBlend, feMergeNode = ref.feMergeNode, feMerge = ref.feMerge, radialGradient = ref.radialGradient, foreignObject = ref.foreignObject, text = ref.text, textArea = ref.textArea, ellipse = ref.ellipse, pattern = ref.pattern, thead = ref.thead, th = ref.th, tr = ref.tr, tbody = ref.tbody, ref);
 
 for (k in dom_stuff) {
   v = dom_stuff[k];
@@ -16089,44 +16089,64 @@ exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
 /* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var central_book_and_input, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, the_whole;
+var atts, central_book_and_input, comp, map_dispatch_to_props, map_state_to_props, render, sidebar_hive, styles, the_whole;
 
 sidebar_hive = __webpack_require__(102)["default"];
 
 central_book_and_input = __webpack_require__(101)["default"];
 
+styles = {
+  root: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: 'snow'
+  },
+  trunk: {
+    display: 'flex',
+    backgroundColor: 'lightblue',
+    width: '100%',
+    flexGrow: 1,
+    maxHeight: 50,
+    flexShrink: 4,
+    justifyContent: 'space-around',
+    alignItems: 'space-between'
+  },
+  header: {
+    alignSelf: 'flex-start',
+    height: 60,
+    color: 'grey',
+    fontFamily: 'sans'
+  },
+  chat_noir_cont: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '20%',
+    alignItems: 'center'
+  }
+};
+
+atts = {};
+
 the_whole = function() {
   var ref, wh, ww;
   ref = this.props, ww = ref.ww, wh = ref.wh;
   return div({
-    style: {
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      backgroundColor: 'snow'
-    }
+    style: styles.root
   }, div({
-    style: {
-      display: 'flex',
-      backgroundColor: 'lightblue',
-      width: '100%',
-      flexGrow: 1,
-      maxHeight: 50,
-      flexShrink: 4,
-      justifyContent: 'space-around',
-      alignItems: 'space-between'
-    }
-  }, h3({
-    style: {
-      alignSelf: 'flex-start',
-      height: 60,
-      color: 'grey',
-      fontFamily: 'sans'
-    }
-  }, "Le Chat Noir"), button({
+    style: styles.trunk
+  }, div({
+    style: styles.chat_noir_cont
+  }, img({
+    width: 40,
+    height: 40,
+    src: '/images/le_chat_noir.jpg'
+  }), h3({
+    style: styles.header
+  }, "Le Chat Noir")), button({
     style: {
       cursor: 'pointer',
       color: 'magenta',
@@ -16177,7 +16197,7 @@ comp = rr({
             username_input_field: ''
           });
         } else {
-          return c('there');
+          return c('kepress noop in chat_lounge');
         }
       };
     })(this));
