@@ -15578,8 +15578,6 @@ function warning(message) {
 
 var Provider, nexus, root_component, root_el, set_and_render, store;
 
-console.log('hi');
-
 __webpack_require__(99);
 
 root_el = document.getElementById('root');
@@ -15751,7 +15749,6 @@ message_card = rc(__webpack_require__(103)["default"]);
 chat_log = function() {
   var idx, item, ref, wh, ww;
   ref = this.props, ww = ref.ww, wh = ref.wh;
-  c('wh here', wh);
   return div({
     style: {
       overflowY: 'auto',
@@ -15804,7 +15801,7 @@ central_book_and_input = function() {
     },
     value: this.state.input_field,
     type: 'text',
-    placeholder: '∫ f(x) dx',
+    placeholder: '...',
     onFocus: (function(_this) {
       return function(e) {
         return _this.setState({
@@ -16113,17 +16110,35 @@ the_whole = function() {
     }
   }, div({
     style: {
+      display: 'flex',
+      backgroundColor: 'lightblue',
+      width: '100%',
       flexGrow: 1,
       maxHeight: 50,
-      flexShrink: 4
+      flexShrink: 4,
+      justifyContent: 'space-around',
+      alignItems: 'space-between'
     }
-  }, h2({
+  }, h3({
     style: {
+      alignSelf: 'flex-start',
       height: 60,
       color: 'grey',
       fontFamily: 'sans'
     }
-  }, "The Chat")), div({
+  }, "Le Chat Noir"), button({
+    style: {
+      cursor: 'pointer',
+      color: 'magenta',
+      height: '50%',
+      alignSelf: 'center'
+    },
+    onClick: (function(_this) {
+      return function() {
+        return c('clicked');
+      };
+    })(this)
+  }, "t1")), div({
     style: {
       display: 'flex',
       flexGrow: 23,
@@ -16141,18 +16156,6 @@ render = function() {
 
 comp = rr({
   componentDidMount: function() {
-    window.keypress_ee = new EE();
-    document.onkeydown = (function(_this) {
-      return function(e) {
-        var keycode;
-        keycode = e.keycode || e.which;
-        if (keycode === 13) {
-          return keypress_ee.emit('new_keypress_enter');
-        } else if (keycode === 27) {
-          return keypress_ee.emit('new_keypress_escape');
-        }
-      };
-    })(this);
     return keypress_ee.on('new_keypress_enter', (function(_this) {
       return function() {
         if (_this.state.input_focus === true) {
@@ -16231,7 +16234,7 @@ exports["default"] = connect(map_state_to_props, map_dispatch_to_props)(comp);
 /* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var applyMiddleware, combineReducers, compose, createStore, imm_initial_state, initial_state, lounger, middleware, reducers, ref, set, side_effect_trigger_f, side_effects, store, thunk;
+var applyMiddleware, combineReducers, compose, createStore, imm_initial_state, initial_state, lounger, middleware, reducers, ref, set, side_effect_trigger_f, side_effects, state_js, store, thunk;
 
 ref = __webpack_require__(96), applyMiddleware = ref.applyMiddleware, compose = ref.compose, createStore = ref.createStore;
 
@@ -16275,9 +16278,10 @@ set = side_effect_trigger_f({
 
 store.subscribe(set);
 
-store.dispatch({
-  type: 'init:primus',
-  payload: null
+state_js = imm_initial_state.toJS();
+
+side_effects({
+  state_js: state_js
 });
 
 module.exports = store;
@@ -16287,11 +16291,23 @@ module.exports = store;
 /* 106 */
 /***/ (function(module, exports) {
 
+var obj;
+
 exports["default"] = {
   lounger: {
+    desires: Imm.Map((
+      obj = {},
+      obj["" + (shortid())] = {
+        type: 'init_keyboard',
+        payload: 'asnetuhnn'
+      },
+      obj["" + (shortid())] = {
+        type: 'init_primus'
+      },
+      obj
+    )),
     chat_log: Imm.List([]),
-    username: 'placholder username',
-    stuff: 43
+    username: 'placholder username'
   }
 };
 
@@ -16411,9 +16427,7 @@ arq['orient:reply'] = function(arg) {
 arq['new_message'] = function(arg) {
   var action, chat_log, data, state;
   state = arg.state, action = arg.action, data = arg.data;
-  c('is in new message', data);
   chat_log = state.get('chat_log');
-  c('chat_log', chat_log);
   chat_log = chat_log.push(data.payload);
   return state.set('chat_log', chat_log);
 };
@@ -16423,58 +16437,15 @@ exports["default"] = arq;
 
 /***/ }),
 /* 109 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 var arq, keys_arq, side_effects_f;
 
 arq = {};
 
-arq['send_edited_message'] = function(arg) {
-  var desire, store;
-  desire = arg.desire, store = arg.store;
-  return primus.write({
-    type: 'send_edited_message',
-    payload: desire.payload
-  });
-};
+arq = assign(arq, __webpack_require__(255)["default"]);
 
-arq['change_username'] = function(arg) {
-  var desire, store;
-  desire = arg.desire, store = arg.store;
-  return primus.write({
-    type: 'change_username',
-    payload: desire.payload
-  });
-};
-
-arq['send_message'] = function(arg) {
-  var desire, store;
-  desire = arg.desire, store = arg.store;
-  return primus.write({
-    type: 'send_message',
-    payload: desire.payload
-  });
-};
-
-arq['init:primus'] = function(arg) {
-  var desire, store;
-  desire = arg.desire, store = arg.store;
-  primus.on('data', function(data) {
-    return store.dispatch({
-      type: 'primus:data',
-      payload: {
-        data: data
-      }
-    });
-  });
-  return setInterval((function(_this) {
-    return function() {
-      return primus.write({
-        type: 'request_orient'
-      });
-    };
-  })(this), 300);
-};
+arq = assign(arq, __webpack_require__(254)["default"]);
 
 keys_arq = keys(arq);
 
@@ -49097,6 +49068,92 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(98);
+
+
+/***/ }),
+/* 254 */
+/***/ (function(module, exports) {
+
+var arq;
+
+arq = {};
+
+arq['send_edited_message'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  return primus.write({
+    type: 'send_edited_message',
+    payload: desire.payload
+  });
+};
+
+arq['change_username'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  return primus.write({
+    type: 'change_username',
+    payload: desire.payload
+  });
+};
+
+arq['send_message'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  return primus.write({
+    type: 'send_message',
+    payload: desire.payload
+  });
+};
+
+arq['init_primus'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  primus.on('data', function(data) {
+    return store.dispatch({
+      type: 'primus:data',
+      payload: {
+        data: data
+      }
+    });
+  });
+  return setInterval((function(_this) {
+    return function() {
+      return primus.write({
+        type: 'request_orient'
+      });
+    };
+  })(this), 300);
+};
+
+exports["default"] = arq;
+
+
+/***/ }),
+/* 255 */
+/***/ (function(module, exports) {
+
+var arq;
+
+arq = {};
+
+arq['init_keyboard'] = function(arg) {
+  var desire, store;
+  desire = arg.desire, store = arg.store;
+  window.keypress_ee = new EE();
+  return document.onkeydown = (function(_this) {
+    return function(e) {
+      var keycode;
+      keycode = e.keycode || e.which;
+      if (keycode === 13) {
+        return keypress_ee.emit('new_keypress_enter');
+      } else if (keycode === 27) {
+        return keypress_ee.emit('new_keypress_escape');
+      }
+    };
+  })(this);
+};
+
+exports["default"] = arq;
 
 
 /***/ })

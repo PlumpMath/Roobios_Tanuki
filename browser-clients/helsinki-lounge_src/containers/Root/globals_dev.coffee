@@ -1,6 +1,3 @@
-
-
-
 window.c = console.log.bind console
 window.React = require 'react'
 window.React_DOM = require 'react-dom'

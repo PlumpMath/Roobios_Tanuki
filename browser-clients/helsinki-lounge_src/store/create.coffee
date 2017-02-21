@@ -27,9 +27,8 @@ side_effect_trigger_f = ({ store }) ->
 set = side_effect_trigger_f { store }
 store.subscribe set
 
-store.dispatch
-    type: 'init:primus'
-    payload: null
+state_js = imm_initial_state.toJS()
+side_effects { state_js }
 
 
 module.exports = store

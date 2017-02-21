@@ -1,14 +1,5 @@
-
-
-
-
-
-
-
 sidebar_hive = require('./chat_lounge/hive_bar.coffee').default
-
 central_book_and_input = require('./chat_lounge/central_thread_scroll.coffee').default
-
 
 
 the_whole = ->
@@ -22,19 +13,32 @@ the_whole = ->
             alignItems: 'center'
             justifyContent: 'flex-start'
             backgroundColor: 'snow'
-
         div
             style:
+                display: 'flex'
+                backgroundColor: 'lightblue'
+                width: '100%'
                 flexGrow: 1
                 maxHeight: 50
                 flexShrink: 4
-            h2
+                justifyContent: 'space-around'
+                alignItems: 'space-between'
+            h3
                 style:
+                    alignSelf: 'flex-start'
                     height: 60
                     color: 'grey'
                     fontFamily: 'sans'
-                "The Chat"
-
+                "Le Chat Noir"
+            button
+                style:
+                    cursor: 'pointer'
+                    color: 'magenta'
+                    height: '50%'
+                    alignSelf: 'center'
+                onClick: =>
+                    c 'clicked'
+                "t1"
         div
             style:
                 display: 'flex'
@@ -45,20 +49,14 @@ the_whole = ->
             sidebar_hive.bind(@)()
             central_book_and_input.bind(@)()
 
+
 render = ->
     { ww, wh } = @props
     the_whole.bind(@)()
 
+
 comp = rr
     componentDidMount: ->
-        window.keypress_ee = new EE()
-        document.onkeydown = (e) =>
-            keycode = e.keycode or e.which
-            if keycode is 13
-                keypress_ee.emit 'new_keypress_enter'
-            else if keycode is 27
-                keypress_ee.emit 'new_keypress_escape'
-
         keypress_ee.on 'new_keypress_enter', =>
             if @state.input_focus is true
                 @props.send_message
@@ -84,6 +82,7 @@ comp = rr
         username: @props.username
 
     render: render
+
 
 map_state_to_props = (state) ->
     state.get('lounger').toJS()

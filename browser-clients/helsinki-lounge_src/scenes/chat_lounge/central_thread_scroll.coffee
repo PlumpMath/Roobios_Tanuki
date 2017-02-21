@@ -1,6 +1,3 @@
-
-
-
 change_input_field = ({ val }) ->
     @setState
         input_field: val
@@ -9,7 +6,6 @@ message_card = rc require('./message_card.coffee').default
 
 chat_log = ->
     { ww, wh } = @props
-    c 'wh here', wh
     div
         style:
             overflowY: 'auto'
@@ -49,7 +45,7 @@ central_book_and_input = ->
                     padding: '8px'
                 value: @state.input_field
                 type: 'text'
-                placeholder: '∫ f(x) dx'
+                placeholder: '...'
                 onFocus: (e) =>
                     @setState
                         input_focus: true
